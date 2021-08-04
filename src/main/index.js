@@ -1,9 +1,8 @@
-'use strict'
+"use strict";
 
-const { app } = require('electron')
-const { createWindow } = require('./window/main')
-const handleIPC = require('./ipc')
-
+const { app } = require("electron");
+const { createWindow } = require("./window/main");
+const handleIPC = require("./ipc");
 
 /**
  * Set `__static` path to static files in production
@@ -13,22 +12,22 @@ const handleIPC = require('./ipc')
 //   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 // }
 
-let mainWindow
+let mainWindow;
 
-app.on('ready', () => {
-  createWindow()
-  handleIPC()
-})
+app.on("ready", () => {
+  createWindow();
+  handleIPC();
+});
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
-})
+});
 
-app.on('activate', () => {
-  createWindow()
-})
+app.on("activate", () => {
+  createWindow();
+});
 
 /**
  * Auto Updater

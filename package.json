@@ -1,6 +1,8 @@
 {
   "name": "leaguetool",
   "version": "0.1.0",
+  "author": "理想三旬 <83727128@qq.com>",
+  "description": "An LeagueTool",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
@@ -15,14 +17,16 @@
   "homepage": "./",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "ant-design-vue": "^1.7.6",
+    "ant-design-vue": "^2.2.2",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^3.0.3",
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "~3.1.4",
     "babel-eslint": "^10.1.0",
     "electron": "^13.0.0",
     "electron-devtools-installer": "^3.1.0",
