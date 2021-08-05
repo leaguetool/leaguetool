@@ -30,7 +30,7 @@ export default defineComponent({
         icon: "HomeOutlined",
       },
       {
-        path: "/home",
+        path: "/",
         title: "重开房间",
         icon: "FlagOutlined",
       },

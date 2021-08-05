@@ -23,7 +23,7 @@ module.exports = function() {
   });
 
   //反馈Bug的地方
-  ipcMain.on("bug", (event) => {
+  ipcMain.on("bug", () => {
     //TODO 有个反馈BUG的地方，这个可以放在项目结束来写
     console.log("bug反馈");
 

@@ -1,5 +1,6 @@
 const { BrowserWindow } = require("electron");
 const { createTray } = require("./tray");
+const { gameClientRunnerTesting } = require("../game/game");
 const path = require("path");
 
 var mainWindow;
@@ -37,18 +38,24 @@ function createWindow() {
   //事件后显示窗口将没有视觉闪烁 必须要设置show: false才生效
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
+    startGameClientTesting();
   });
 
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
-  
+
   //打开控制面板F12
   // mainWindow.webContents.openDevTools();
 
   //创建托盘
   createTray(mainWindow);
   return mainWindow;
+}
+
+//检测游戏客户端是否存活
+function startGameClientTesting() {
+  gameClientRunnerTesting(send);
 }
 
 //主进程推送渲染进程消息

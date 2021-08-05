@@ -3,6 +3,7 @@
 const { app } = require("electron");
 const { createWindow } = require("./window/main");
 const handleIPC = require("./ipc");
+require("./cmd");
 
 /**
  * Set `__static` path to static files in production

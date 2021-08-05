@@ -5,8 +5,8 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import CheckClientStart from "../components/CheckClientStart.vue";
 import { ipcRenderer } from "electron";
+import CheckClientStart from "../components/CheckClientStart.vue";
 
 export default {
   components: {

@@ -13,16 +13,14 @@ import { ipcRenderer } from "electron";
 import GithubOutlined from "@ant-design/icons-vue/GithubOutlined";
 import BugOutlined from "@ant-design/icons-vue/BugOutlined";
 import NavBar from "./NavBar.vue";
-import { ref } from "vue";
 export default {
   components: {
     NavBar,
     GithubOutlined,
     BugOutlined,
   },
+  props: ["title"],
   setup() {
-    let title = ref("LeagueTool");
-
     function github() {
       ipcRenderer.send("github");
     }
@@ -32,7 +30,6 @@ export default {
     return {
       github,
       bug,
-      title,
     };
   },
 };

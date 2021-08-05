@@ -93,4 +93,4 @@ async function startScanning() {
     });
 }
 
-module.exports = { startScanning };
+module.exports = { startScanning, onlineLeagueClient };
