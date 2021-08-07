@@ -61,7 +61,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   color: #2c3e50;
-  width: 800px;
+  width: 1000px;
   height: 720px;
   background-color: #f5f5f5;
   -webkit-user-select: none;
@@ -93,6 +93,7 @@ export default {
   opacity: 0.85;
 }
 .cursor-op:hover {
+  color: #fff;
   opacity: 1;
 }
 

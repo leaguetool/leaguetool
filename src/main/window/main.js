@@ -1,4 +1,4 @@
-const { BrowserWindow } = require("electron");
+const { BrowserWindow, session } = require("electron");
 const { createTray } = require("./tray");
 const { gameClientRunnerTesting } = require("../game/game");
 const path = require("path");
@@ -13,8 +13,10 @@ function createWindow() {
   /**
    * Initial window options
    */
+
+  loadDevTools();
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 720,
     frame: false,
     titleBarStyle: "hidden",
@@ -66,6 +68,16 @@ function send(channel, ...args) {
 //获取主进程
 function getMainWindow() {
   return mainWindow;
+}
+
+//加载插件
+function loadDevTools() {
+  if (process.env.NODE_ENV === "development") {
+    //加载vue-devtools扩展
+    session.defaultSession.loadExtension(
+      "C:/Users/admin/AppData/Local/Google/Chrome/User Data/Default/Extensions/ljjemllljcmogpfapbkkighbhhppjdbg/6.0.0.15_0"
+    );
+  }
 }
 
 module.exports = { createWindow, send, getMainWindow };

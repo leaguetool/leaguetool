@@ -61,6 +61,7 @@ export default {
 .winbar {
   display: flex;
   height: 30px;
+  color: #fff;
 }
 .winbtn {
   cursor: pointer;
@@ -68,7 +69,7 @@ export default {
 }
 .winbtn.close:hover {
   opacity: 1;
-  color: white;
+  color: #fff;
   background-color: #ff4d4f !important;
 }
 .winbtn:hover {

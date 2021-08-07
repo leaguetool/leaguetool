@@ -18,10 +18,14 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
     "ant-design-vue": "^2.2.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "electron-store": "^8.0.0",
+    "js-base64": "^3.6.1",
     "node-schedule": "^2.0.0",
-    "vue": "^3.0.3",
-    "vue-router": "^4.0.10"
+    "vue": "^3.1.5",
+    "vue-router": "^4.0.10",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

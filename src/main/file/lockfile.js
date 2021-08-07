@@ -79,7 +79,13 @@ async function startScanning() {
           let agres = authString.split(":");
           if (agres.length >= 4) {
             //触发给主线程事件
-            data = { port: agres[2], token: agres[3], protocol: agres[4] };
+            data = {
+              port: agres[2],
+              token: agres[3],
+              protocol: agres[4],
+              username: "riot",
+              verification: "@",
+            };
             store.set("gameInfo", data);
             // console.log(data)
           }

@@ -8,16 +8,16 @@ module.exports = {
     electronBuilder: {
       nodeIntegration: true,
       //主进程入口
-      mainProcessFile: 'src/main/index.js',
+      mainProcessFile: "src/main/index.js",
       //渲染进程入口
-      rendererProcessFile: 'src/renderer/main.js',
+      rendererProcessFile: "src/renderer/main.js",
       //文件在更改时将重新编译主进程并重新启动
       // mainProcessWatch: ['src/myFile1', 'src/myFile2'],
       //输出将新目录添加到 .gitignore 文件
       // outputDir: 'release',
       //协议 确保在协议末尾添加“./”
       // customFileProtocol: 'leaguetool://./',
-      customFileProtocol: './',
+      customFileProtocol: "./",
 
       builderOptions: {
         //asar包是否压缩加密
@@ -29,25 +29,26 @@ module.exports = {
         win: {
           target: [
             {
-              target: "nsis",//利用nsis制作安装程序
+              target: "nsis", //利用nsis制作安装程序
               arch: [
-                "ia32",//打包32位64位也能使用
-              ]
-            }
-          ]
-        }
-      }
-    }
+                "ia32", //打包32位64位也能使用
+              ],
+            },
+          ],
+        },
+      },
+    },
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.resolve.alias
       .set("@", resolve("src/renderer")) // key,value自行定义，比如.set('@@', resolve('src/components'))
+      .set("~", resolve("src/main"));
   },
-  publicPath: './',
-  assetsDir: 'static'
+  publicPath: "./",
+  assetsDir: "static",
   // ,pages: {
   //   index: {
   //     entry: 'src/renderer/main.js',
   //   }
   // }
-}
+};

@@ -5,18 +5,19 @@
       v-for="menu in menus"
       :key="menu.title"
       :menu="menu"
+      :current="current"
       @click="gotoPath(menu.path)"
     />
     <MenuFoot class="menu-foot" />
   </div>
 </template>
 <script>
-import { useRouter } from "vue-router";
-import { defineComponent, reactive } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { reactive, watch, ref } from "vue";
 import ProFileImg from "../ProFileImg.vue";
 import MenuItem from "./MenuItem.vue";
 import MenuFoot from "./MenuFoot.vue";
-export default defineComponent({
+export default {
   components: {
     ProFileImg,
     MenuItem,
@@ -25,33 +26,45 @@ export default defineComponent({
   setup() {
     let menus = reactive([
       {
-        path: "/home/pro-file",
-        title: "游戏设置",
+        path: "/home/index",
+        title: "主页",
         icon: "HomeOutlined",
+        selectIcon: "HomeFilled",
       },
       {
         path: "/",
         title: "重开房间",
         icon: "FlagOutlined",
+        selectIcon: "FlagOutlined",
       },
       {
-        path: "/home",
+        path: "/home/pro-file",
         title: "插件中心",
         icon: "PlusSquareOutlined",
+        selectIcon: "PlusSquareFilled",
       },
     ]);
     const router = useRouter();
+    const route = useRoute();
     let gotoPath = (path) => {
       router.push(path);
     };
 
-    return { menus, gotoPath };
+    let current = ref(menus[0].path);
+    watch(
+      () => route.path,
+      (newValue) => {
+        current.value = newValue;
+      }
+    );
+
+    return { menus, current, gotoPath };
   },
-});
+};
 </script>
 <style>
 .menu {
-  width: 100px;
+  width: 200px;
   height: 100%;
   color: #eeeeee;
   background-color: #222022;
