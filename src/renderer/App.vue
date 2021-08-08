@@ -1,21 +1,25 @@
 <template>
   <div id="app">
-    <Nav class="nav" :title="appName" />
+    <Nav class="nav" :title="appName" :showIcon="appName != ''" />
     <div id="content-holder">
       <router-view class="router-content" />
     </div>
+    <BackGround />
   </div>
 </template>
 
 <script>
+import mitt from "@/common/mitt";
 import { ipcRenderer } from "electron";
 import { useRouter, useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import Nav from "./components/Nav/Nav.vue";
+import BackGround from "./components/BackGround.vue";
 export default {
   name: "App",
   components: {
     Nav,
+    BackGround,
   },
   setup() {
     let name = "LeagueTool";
@@ -28,9 +32,9 @@ export default {
       router.push("/");
     });
     ipcRenderer.on("game-online", () => {
-      //游戏在线时，如果在检测页面，那么只需要刷新一次检测页面即可
+      //游戏在线时，如果在检测页面，那么只需要抛出事件即可
       if (route.path === "/") {
-        router.go(0);
+        mitt.emit("game-online");
       }
     });
 
@@ -41,6 +45,13 @@ export default {
         appName.value = newValue === "/" ? name : "";
       }
     );
+
+    onMounted(() => {
+      setTimeout(() => {
+        ipcRenderer.send("stop-loading-main");
+      }, 1000);
+    });
+
     return {
       appName,
     };
@@ -60,10 +71,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
-  color: #2c3e50;
+  color: #fff;
   width: 1000px;
   height: 720px;
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
   -webkit-user-select: none;
 }
 
@@ -75,12 +86,11 @@ export default {
 }
 .nav {
   position: absolute;
-  z-index: 2;
-  /* top: 0; */
+  z-index: 999;
 }
 #content-holder .router-content {
   position: relative;
-  z-index: 1 !important;
+  z-index: 2 !important;
   /* padding-top: -30px; */
   /* padding: 0 10px; */
 }
@@ -91,7 +101,14 @@ export default {
 .cursor-op {
   cursor: pointer;
   opacity: 0.85;
+  -webkit-user-select: none;
 }
+.cursor-font {
+  cursor: pointer;
+  opacity: 0.85;
+  -webkit-user-select: none;
+}
+
 .cursor-op:hover {
   color: #fff;
   opacity: 1;

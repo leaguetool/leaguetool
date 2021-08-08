@@ -13,21 +13,24 @@ const lockfile = "/LeagueClient/lockfile";
 
 //"reg query HKEY_CURRENT_USER\\SOFTWARE\\Tencent\\LOL /v InstallPath"
 //获取客户端路径
-function viewRegistryMessage(command, cb) {
-  exec(command, function(err, stdout, stderr) {
-    if (err) {
-      return console.error(err);
-    }
-    leagueClientPath = stdout
-      .split(/\s+/g)
-      .filter((line) => {
-        return (
-          line &&
-          ![registryPath, registryPathKey, registryREG_SZ].includes(line)
-        );
-      })
-      .join();
-    cb(leagueClientPath);
+function viewRegistryMessage(command) {
+  return new Promise(function(resolve, reject) {
+    exec(command, function(err, stdout, stderr) {
+      if (err) {
+        reject(err);
+        // return console.error(err);
+      }
+      leagueClientPath = stdout
+        .split(/\s+/g)
+        .filter((line) => {
+          return (
+            line &&
+            ![registryPath, registryPathKey, registryREG_SZ].includes(line)
+          );
+        })
+        .join();
+      resolve(leagueClientPath);
+    });
   });
 }
 
@@ -64,33 +67,41 @@ function fileRead(installPath) {
 
 //开始扫描
 async function startScanning() {
-  let data = {};
+  let data = {
+    port: null,
+    token: null,
+    protocol: null,
+    username: "riot",
+    verification: "@",
+  };
   return onlineLeagueClient()
     .then(() => {
-      viewRegistryMessage(command, (leagueClientPath) => {
-        console.log("获取到客户端路径：", leagueClientPath);
-        authString = fileRead(leagueClientPath);
-        if (!authString) {
-          data.msg = "读取文件失败，可能是未启动客户端";
-          console.log(data.msg);
-        } else {
-          //以冒号分开，分别是:进程名,PID,端口号,token,协议
-          //参数放在内存中
-          let agres = authString.split(":");
-          if (agres.length >= 4) {
-            //触发给主线程事件
-            data = {
-              port: agres[2],
-              token: agres[3],
-              protocol: agres[4],
-              username: "riot",
-              verification: "@",
-            };
-            store.set("gameInfo", data);
-            // console.log(data)
-          }
+      return viewRegistryMessage(command);
+    })
+    .then((leagueClientPath) => {
+      console.log("获取到客户端路径：", leagueClientPath);
+      authString = fileRead(leagueClientPath);
+      if (!authString) {
+        //读取文件失败
+        data.msg = "请稍后，可能是客户端正在启动中";
+        console.log(data.msg);
+      } else {
+        //以冒号分开，分别是:进程名,PID,端口号,token,协议
+        //参数放在内存中
+        let agres = authString.split(":");
+        if (agres.length >= 4) {
+          //触发给主线程事件
+          data = {
+            port: agres[2],
+            token: agres[3],
+            protocol: agres[4],
+            username: "riot",
+            verification: "@",
+          };
+          store.set("gameInfo", data);
+          // console.log(data)
         }
-      });
+      }
       return data;
     })
     .catch(() => {

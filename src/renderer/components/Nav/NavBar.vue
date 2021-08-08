@@ -9,8 +9,19 @@
     >
       <!-- 标题 -->
       <div class="navbar-title" :class="{ center: center }">
-        <template v-if="$slots.title"><slot name="title"/></template>
-        <template v-else>{{ title }}</template>
+        <img
+          v-if="showIcon"
+          src="../../assets/logo.png"
+          class="navbar-icon"
+          width="16"
+          height="16"
+        />
+        <template v-if="$slots.title">
+          <slot name="title" />
+        </template>
+        <template v-else>
+          {{ title }}
+        </template>
       </div>
     </div>
     <WinBar
@@ -42,6 +53,8 @@ export default {
     transparent: { type: [Boolean, String], default: false },
     // 设置层级
     zIndex: { type: [Number, String], default: "2021" },
+    // 显示左上角图标
+    showIcon: { type: [Boolean], default: true },
 
     /**
      * WinBar组件参数
@@ -78,7 +91,11 @@ export default {
 }
 .navbar-title {
   padding-left: 5px;
-  color: rgba(0, 0, 0, 0.5);
+  opacity: 0.7;
+  color: #fff;
+}
+.navbar-icon {
+  margin-right: 4px;
 }
 .navbar-title.center {
   text-align: center;

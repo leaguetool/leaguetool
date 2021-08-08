@@ -3,19 +3,15 @@
 const { app } = require("electron");
 const { createWindow } = require("./window/main");
 const handleIPC = require("./ipc");
-const store = require("./store");
 require("./cmd");
 
 //electron忽略证书相关的错误.
 app.commandLine.appendSwitch("--ignore-certificate-errors", "true");
 app.commandLine.appendSwitch("--disable-web-security", "true");
 
-let mainWindow;
-
 app.on("ready", () => {
   createWindow();
   handleIPC();
-  console.log(store.get("gameInfo"));
 });
 
 app.on("window-all-closed", () => {

@@ -18,6 +18,7 @@ import {
   FlagOutlined,
   PlusSquareOutlined,
   PlusSquareFilled,
+  UserOutlined,
 } from "@ant-design/icons-vue";
 export default {
   props: ["menu", "current"],
@@ -27,6 +28,7 @@ export default {
     FlagOutlined,
     PlusSquareOutlined,
     PlusSquareFilled,
+    UserOutlined,
   },
   setup() {
     return {};
@@ -52,10 +54,10 @@ export default {
   background: #f9cc16; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #f9cc16,
-    #ffe000
+    #faad14,
+    #f9cc16
   ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #faad14, #ffc53d);
+  background: linear-gradient(to right, #faad14, #f9cc16);
 }
 .ment-item .ment-item-icon {
   font-size: 18px;

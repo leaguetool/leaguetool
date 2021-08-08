@@ -1,9 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import CheckClientRuning from "./views/CheckClientRuning";
-import HomePage from "./views/Home/HomePage";
-import HomeIndex from "./views/Home/Index";
-import ProFile from "./views/ProFile/ProFile";
+import CheckClientRuning from "@/views/CheckClientRuning";
+import HomePage from "@/views/Home/HomePage";
+import HomeIndex from "@/views/Home/Index";
+import ProFile from "@/views/ProFile/ProFile";
+import Error from "@/views/Error.vue";
 const routes = [
   {
     path: "/",
@@ -27,6 +28,11 @@ const routes = [
         component: ProFile,
       },
     ],
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "Error",
+    component: Error,
   },
 ];
 const router = createRouter({

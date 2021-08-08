@@ -1,5 +1,5 @@
 <template>
-  <NavBar :maximizable="false" transparent center fixed>
+  <NavBar class="navbar" :maximizable="false" transparent center fixed>
     <template #title>{{ title }}</template>
     <template #wbtn>
       <GithubOutlined title="Github" @click="github" class="winbtn" />
@@ -34,3 +34,8 @@ export default {
   },
 };
 </script>
+<style>
+.navbar {
+  height: 30px;
+}
+</style>

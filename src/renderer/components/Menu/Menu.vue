@@ -32,13 +32,19 @@ export default {
         selectIcon: "HomeFilled",
       },
       {
+        path: "/home/pro-file",
+        title: "个人信息",
+        icon: "UserOutlined",
+        selectIcon: "UserOutlined",
+      },
+      {
         path: "/",
         title: "重开房间",
         icon: "FlagOutlined",
         selectIcon: "FlagOutlined",
       },
       {
-        path: "/home/pro-file",
+        path: "/home/plugins",
         title: "插件中心",
         icon: "PlusSquareOutlined",
         selectIcon: "PlusSquareFilled",

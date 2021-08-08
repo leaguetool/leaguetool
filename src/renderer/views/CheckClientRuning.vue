@@ -3,9 +3,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ipcRenderer } from "electron";
+import mitt from "@/common/mitt";
 import CheckClientStart from "../components/CheckClientStart.vue";
 
 export default {
@@ -18,13 +19,20 @@ export default {
     const router = useRouter();
     const login = async () => {
       const pro = await ipcRenderer.invoke("login");
+      console.log(pro);
       //未启动客户端就有消息反馈出来
       if (pro.msg) {
         title.value = pro.msg;
-      } else {
+      } else if (pro.token) {
         router.push("/home");
       }
     };
+    onMounted(() => {
+      //采用mitt组件总线通信
+      mitt.on("game-online", () => {
+        login();
+      });
+    });
     login();
     return {
       title,

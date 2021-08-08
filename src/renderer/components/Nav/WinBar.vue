@@ -60,7 +60,6 @@ export default {
 <style>
 .winbar {
   display: flex;
-  height: 30px;
   color: #fff;
 }
 .winbtn {
@@ -81,6 +80,5 @@ export default {
   justify-content: center;
   align-items: center;
   width: 40px;
-  height: 30px;
 }
 </style>
