@@ -1,15 +1,12 @@
 {
   "name": "leaguetool",
   "version": "0.1.0",
-  "author": "理想三旬 <83727128@qq.com>",
-  "description": "An LeagueTool",
+  "author": "Lemon <83727128@qq.com>",
+  "description": "LeagueTool",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
     "start": "vue-cli-service electron:serve",
     "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
@@ -20,7 +17,9 @@
     "ant-design-vue": "^2.2.2",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "electron-log": "^4.4.1",
     "electron-store": "^8.0.0",
+    "electron-updater": "^4.3.9",
     "js-base64": "^3.6.1",
     "mitt": "^3.0.0",
     "node-schedule": "^2.0.0",

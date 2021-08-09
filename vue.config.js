@@ -1,4 +1,5 @@
 const path = require("path");
+const pkg = require("./package.json");
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -14,7 +15,7 @@ module.exports = {
       //文件在更改时将重新编译主进程并重新启动
       // mainProcessWatch: ['src/myFile1', 'src/myFile2'],
       //输出将新目录添加到 .gitignore 文件
-      // outputDir: 'release',
+      outputDir: "./dist_electron/output",
       //协议 确保在协议末尾添加“./”
       // customFileProtocol: 'leaguetool://./',
       customFileProtocol: "./",
@@ -35,6 +36,19 @@ module.exports = {
               ],
             },
           ],
+        },
+        nsis: {
+          language: "2052",
+          uninstallDisplayName: "LeagueTool",
+        },
+        publish: [
+          {
+            provider: "generic",
+            url: "http://www.leaguetool.com/update",
+          },
+        ],
+        directories: {
+          output: `./dist_electron/release/${pkg.version}`, // 输出文件路径
         },
       },
     },

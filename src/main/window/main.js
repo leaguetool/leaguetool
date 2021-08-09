@@ -83,7 +83,7 @@ function send(channel, ...args) {
 }
 
 function removeLoadingView() {
-  loadingView && getMainWindow().removeBrowserView(loadingView);
+  loadingView && mainWindow.removeBrowserView(loadingView);
   loadingView = null;
 }
 
@@ -101,6 +101,8 @@ function loadDevTools() {
     /**
      * 开发环境安装 Vue3 Devtools 从google商店扩展下载 需要科学上网！！
      * 如果遇到此类型警告，忽略即可，Beta版本的devtools会有些问题，不影响项目正常使用
+     * [issues] https://blog.csdn.net/x1017619024/article/details/109147848
+     * [issues] https://github.com/vuejs/vue-devtools/issues/1279
      * (node:115780) ExtensionLoadWarning: Warnings loading extension at C:\Users\xxx\AppData\Roaming\leaguetool\extensions\ljjemllljcmogpfapbkkighbhhppjdbg:
      *   Cannot load extension with file or directory name _metadata. Filenames starting with "_" are reserved for use by the system.
      * (Use `electron --trace-warnings ...` to show where the warning was created)
