@@ -44,7 +44,7 @@ module.exports = {
         publish: [
           {
             provider: "generic",
-            url: "http://www.leaguetool.com/update",
+            url: "http://static.s6.design/update",
           },
         ],
         directories: {
@@ -65,7 +65,10 @@ module.exports = {
     loaderOptions: {
       less: {
         lessOptions: {
-          modifyVars: { "primary-color": "#f9cc16" },
+          modifyVars: {
+            "primary-color": "#f9cc16",
+            "text-color-secondary": "#f5f5f5",
+          },
           javascriptEnabled: true,
         },
       },

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, session, BrowserView } = require("electron");
+const { app, BrowserWindow, BrowserView } = require("electron");
 const {
   default: installExtension,
   VUEJS3_DEVTOOLS,
@@ -9,7 +9,6 @@ const path = require("path");
 
 var mainWindow;
 var loadingView;
-const devServerUrl = "http://localhost:8080";
 function createWindow() {
   if (mainWindow != null) {
     mainWindow.show();
@@ -51,8 +50,10 @@ function createWindow() {
     loadingView.webContents.loadFile(path.join(__dirname, "loading.html"));
     mainWindow.loadFile(path.join(__dirname, "index.html"));
   } else {
-    loadingView.webContents.loadURL(`${devServerUrl}/loading.html`);
-    mainWindow.loadURL(devServerUrl);
+    loadingView.webContents.loadURL(
+      `${process.env.WEBPACK_DEV_SERVER_URL}/loading.html`
+    );
+    mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
   }
 
   //事件后显示窗口将没有视觉闪烁 必须要设置show: false才生效

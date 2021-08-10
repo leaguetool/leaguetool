@@ -4,6 +4,7 @@ import CheckClientRuning from "@/views/CheckClientRuning";
 import HomePage from "@/views/Home/HomePage";
 import HomeIndex from "@/views/Home/Index";
 import ProFile from "@/views/ProFile/ProFile";
+import Update from "@/views/System/Update.vue";
 import Error from "@/views/Error.vue";
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
         component: ProFile,
       },
     ],
+  },
+  {
+    path: "/update",
+    name: "update",
+    component: Update,
   },
   {
     path: "/:catchAll(.*)",

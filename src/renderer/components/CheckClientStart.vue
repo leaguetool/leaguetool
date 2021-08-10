@@ -4,7 +4,7 @@
       <img src="../assets/logo.png" class="navbar-icon" height="150"
     /></template>
     <template #extra>
-      <a-button type="primary">检测启动中</a-button>
+      <a-button type="primary" loading>检测启动中</a-button>
     </template>
 
     <div class="desc">

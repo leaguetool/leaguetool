@@ -1,12 +1,13 @@
 {
   "name": "leaguetool",
-  "version": "0.1.0",
+  "version": "0.1.8",
   "author": "Lemon <83727128@qq.com>",
   "description": "LeagueTool",
   "private": true,
   "scripts": {
     "start": "vue-cli-service electron:serve",
-    "electron:build": "vue-cli-service electron:build",
+    "build": "vue-cli-service electron:build",
+    "postbuild": "node ./build/build.js",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
@@ -37,6 +38,7 @@
     "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "js-yaml": "^3.14.1",
     "less": "^4.1.1",
     "less-loader": "^6.0.0",
     "vue-cli-plugin-electron-builder": "~2.1.1",

@@ -1,10 +1,15 @@
 <template>
   <div id="app">
-    <Nav class="nav" :title="appName" :showIcon="appName != ''" />
+    <Nav
+      class="nav"
+      v-show="isShow"
+      :title="appName"
+      :showIcon="appName != ''"
+    />
     <div id="content-holder">
       <router-view class="router-content" />
     </div>
-    <BackGround />
+    <BackGround v-show="isShow" />
   </div>
 </template>
 
@@ -24,6 +29,7 @@ export default {
   setup() {
     let name = "LeagueTool";
     let appName = ref(name);
+    let isShow = ref(true);
     // 获取路由器实例
     const router = useRouter();
     // route是响应式对象,可监控器变化
@@ -45,7 +51,9 @@ export default {
         appName.value = newValue === "/" ? name : "";
       }
     );
-
+    mitt.on("app-update", () => {
+      isShow.value = !isShow.value;
+    });
     onMounted(() => {
       setTimeout(() => {
         ipcRenderer.send("stop-loading-main");
@@ -54,6 +62,7 @@ export default {
 
     return {
       appName,
+      isShow,
     };
   },
 };
@@ -72,8 +81,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   color: #fff;
-  width: 1000px;
-  height: 720px;
+  /* width: 1000px; */
+  /* height: 720px; */
+  width: 100%;
+  height: calc(100vh);
   /* background-color: #f5f5f5; */
   -webkit-user-select: none;
 }
@@ -118,7 +129,25 @@ export default {
   -webkit-user-select: none;
   -webkit-app-region: drag;
 }
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 ::-webkit-scrollbar {
-  display: none;
+  width: 5px;
+  height: 5px;
+  background-color: #f5f5f5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f9cc16;
 }
 </style>

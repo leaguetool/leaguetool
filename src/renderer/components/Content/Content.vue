@@ -13,8 +13,8 @@ export default {};
 
 <style>
 .league-content {
-  width: 800px;
-  height: 100%;
+  height: calc(100% - 200px);
+  height: calc(100vh);
   padding: 30px 10px 10px 10px;
 }
 .league-content-line {
