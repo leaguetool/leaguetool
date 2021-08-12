@@ -13,18 +13,19 @@ export default {};
 
 <style>
 .league-content {
-  height: calc(100% - 200px);
-  height: calc(100vh);
-  padding: 30px 10px 10px 10px;
+  width: 100%;
+  height: calc(100vh - 52px);
+  padding: 0px 30px;
+  margin-top: 30px;
 }
+
 .league-content-line {
   width: 100%;
   position: absolute;
   top: 30px;
   margin-bottom: 5px;
-  border-top: 0.5px solid #777777;
+  border-top: 0.5px solid #8888886e;
 }
-.league-content .league-router {
-  /* position: relative; */
+.league-router {
 }
 </style>

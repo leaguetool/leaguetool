@@ -25,4 +25,20 @@ export default {
   height: 100%;
   display: flex;
 }
+.home-page .home-menu {
+  width: calc(20%);
+}
+.home-page .home-content {
+  width: calc(80%);
+}
+.home-page:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 81px;
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 5px 62px rgba(0, 0, 0, 0.3), 0 10px 75px #000;
+  box-shadow: 0 5px 62px rgba(0, 0, 0, 0.3), 0 10px 75px #000;
+}
 </style>
