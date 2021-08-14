@@ -78,6 +78,16 @@ export default {
   text-align: center;
   position: relative;
 }
+.menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  filter: blur(20px);
+  margin: -30px;
+}
 .profile-headimg {
   margin-bottom: 20px !important;
 }

@@ -1,13 +1,21 @@
 <template>
-  <div class="ment-item cursor-op" :class="{ current: current === menu.path }">
-    <a-space :size="14">
-      <component
-        class="ment-item-icon"
-        :is="current === menu.path ? menu.selectIcon : menu.icon"
-      />
-      <span>{{ menu.title }}</span>
-    </a-space>
-    <div></div>
+  <div>
+    <div
+      class="ment-item cursor-op"
+      :class="{ current: current === menu.path }"
+    >
+      <div
+        class="ment-item-head"
+        :class="{ current: current === menu.path }"
+      ></div>
+      <a-space :size="14" class="ment-item-content">
+        <component
+          class="ment-item-icon"
+          :is="current === menu.path ? menu.selectIcon : menu.icon"
+        />
+        <span>{{ menu.title }}</span>
+      </a-space>
+    </div>
   </div>
 </template>
 
@@ -38,12 +46,35 @@ export default {
 
 <style>
 .ment-item {
-  padding: 15px 0px 15px 40px;
+  position: relative;
+  overflow: hidden;
   text-align: left;
   transition: 500ms;
   -moz-transition: 500ms;
   -webkit-transition: 500ms;
   -o-transition: 500ms;
+}
+.ment-item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 100%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.9s;
+}
+
+.ment-item:active:after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
 }
 .ment-item:hover {
   background-color: #2d2d2d;
@@ -51,14 +82,26 @@ export default {
 .ment-item.current {
   opacity: 1;
   color: #fff;
-  background: #f9cc16; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #faad14,
-    #f9cc16
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #faad14, #f9cc16);
+  background: #2d2d2d;
+  /*background: #f9cc16;
+  /* background: -webkit-linear-gradient(to right, #faad14, #f9cc16);
+  background: linear-gradient(to right, #faad14, #f9cc16); */
 }
+
+.ment-item-head {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 5px;
+}
+.ment-item-head.current {
+  background-color: #faad14;
+}
+
+.ment-item-content {
+  padding: 15px 0px 15px 40px;
+}
+
 .ment-item .ment-item-icon {
   font-size: 18px;
 }
