@@ -17,7 +17,7 @@
 import mitt from "@/common/mitt";
 import { ipcRenderer } from "electron";
 import { useRouter, useRoute } from "vue-router";
-import { ref, watch, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import Nav from "./components/Nav/Nav.vue";
 import BackGround from "./components/BackGround.vue";
 export default {
@@ -45,12 +45,12 @@ export default {
     });
 
     //监听改变顶部标题
-    watch(
-      () => route.path,
-      (newValue) => {
-        appName.value = newValue === "/" ? name : "";
-      }
-    );
+    // watch(
+    //   () => route.path,
+    //   (newValue) => {
+    //     appName.value = newValue === "/update" ? "" : name;
+    //   }
+    // );
     mitt.on("app-update", () => {
       isShow.value = !isShow.value;
     });

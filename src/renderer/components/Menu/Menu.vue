@@ -1,6 +1,10 @@
 <template>
   <div class="menu">
-    <ProFileImg class="profile-headimg" @click="gotoPath('/home/pro-file')" />
+    <ProFileImg
+      class="profile-headimg"
+      @changeStatus="changeStatus"
+      @clickHead="clickHead"
+    />
     <MenuItem
       v-for="menu in menus"
       :key="menu.title"
@@ -56,6 +60,13 @@ export default {
       router.push(path);
     };
 
+    const changeStatus = () => {
+      console.log("我要改变状态");
+    };
+    const clickHead = () => {
+      gotoPath("/home/pro-file");
+    };
+
     let current = ref(menus[0].path);
     watch(
       () => route.path,
@@ -64,7 +75,7 @@ export default {
       }
     );
 
-    return { menus, current, gotoPath };
+    return { menus, current, changeStatus, clickHead, gotoPath };
   },
 };
 </script>
@@ -74,7 +85,7 @@ export default {
   height: 100%;
   color: #eeeeee;
   background-color: #222022;
-  padding-top: 30px;
+  padding-top: 40px;
   text-align: center;
   position: relative;
 }
@@ -85,8 +96,6 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  filter: blur(20px);
-  margin: -30px;
 }
 .profile-headimg {
   margin-bottom: 20px !important;
