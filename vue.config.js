@@ -28,6 +28,7 @@ module.exports = {
         copyright: "Copyright (C) 2021 leaguetool",
         //win相关配置
         win: {
+          requestedExecutionLevel: "requireAdministrator",
           target: [
             {
               target: "nsis", //利用nsis制作安装程序

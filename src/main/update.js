@@ -7,9 +7,9 @@
  */
 const { app, ipcMain } = require("electron");
 const { autoUpdater } = require("electron-updater");
+const { getUpdateWindow } = require("./window/update");
 const store = require("./store");
 const log = require("electron-log");
-const { getUpdateWindow } = require("./window/update");
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
@@ -22,7 +22,7 @@ function sendContentToWindow(key, text) {
   getUpdateWindow().webContents.send(key, text);
 }
 
-function checkForUpdates() {
+export const checkForUpdates = () => {
   // 在下载之前将autoUpdater的autoDownload属性设置成false，通过渲染进程触发主进程事件来实现这一设置(将自动更新设置成false)
   autoUpdater.autoDownload = false;
 
@@ -99,8 +99,4 @@ function checkForUpdates() {
       autoUpdater.downloadUpdate();
     });
   });
-}
-
-module.exports = {
-  checkForUpdates,
 };

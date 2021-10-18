@@ -34,7 +34,7 @@ module.exports = {
           dialog.showMessageBox({
             title: pkg.name,
             message: pkg.description,
-            detail: `作者: ${pkg.author}\nversion: ${pkg.version}`,
+            detail: `作者: ${pkg.author.name}\nversion: ${pkg.version}`,
           });
           console.log("点击关于LeagueTool");
         },

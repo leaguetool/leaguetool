@@ -8,7 +8,7 @@ const { createTray } = require("./tray");
  */
 const UPDATE_PATH = "/update";
 var updateWindow;
-function createUpdateWindow() {
+export const createUpdateWindow = () => {
   updateWindow = new BrowserWindow({
     width: 700,
     height: 250,
@@ -40,10 +40,8 @@ function createUpdateWindow() {
     updateWindow.show();
   });
   createTray(updateWindow);
-}
+};
 
-function getUpdateWindow() {
+export const getUpdateWindow = () => {
   return updateWindow;
-}
-
-module.exports = { createUpdateWindow, getUpdateWindow };
+};

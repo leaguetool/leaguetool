@@ -9,7 +9,7 @@ const path = require("path");
 
 var mainWindow;
 var loadingView;
-function createWindow() {
+export const createWindow = () => {
   if (mainWindow != null) {
     mainWindow.show();
     return mainWindow;
@@ -71,7 +71,7 @@ function createWindow() {
   //创建托盘
   createTray(mainWindow);
   return mainWindow;
-}
+};
 
 //检测游戏客户端是否存活
 function startGameClientTesting() {
@@ -79,23 +79,23 @@ function startGameClientTesting() {
 }
 
 //主进程推送渲染进程消息
-function send(channel, ...args) {
+export const send = (channel, ...args) => {
   mainWindow.webContents.send(channel, args);
-}
+};
 
-function removeLoadingView() {
+export const removeLoadingView = () => {
   loadingView && mainWindow.removeBrowserView(loadingView);
   loadingView = null;
-}
+};
 
 //获取主进程
-function getMainWindow() {
+export const getMainWindow = () => {
   return mainWindow;
-}
+};
 //获取加载View
-function getLoadingView() {
+export const getLoadingView = () => {
   return loadingView;
-}
+};
 //加载插件
 function loadDevTools() {
   if (!app.isPackaged) {
@@ -113,11 +113,3 @@ function loadDevTools() {
       .catch((err) => console.log("An error occurred: ", err));
   }
 }
-
-module.exports = {
-  createWindow,
-  send,
-  getMainWindow,
-  getLoadingView,
-  removeLoadingView,
-};

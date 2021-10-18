@@ -1,13 +1,13 @@
 const schedule = require("node-schedule");
 const { onlineLeagueClient } = require("../file/lockfile");
-
 //创建一个定时任务 10秒钟检测game进程是否存活
-function gameClientRunnerTesting(send) {
+export const gameClientRunnerTesting = (send) => {
   let rule = new schedule.RecurrenceRule();
 
   rule.second = [0, 10, 20, 30, 40, 50];
 
-  schedule.scheduleJob(rule, function() {
+  schedule.scheduleJob(rule, function(time) {
+    send("game-testing", time);
     onlineLeagueClient()
       .then(() => {
         //game在线
@@ -18,8 +18,4 @@ function gameClientRunnerTesting(send) {
         send("game-kill");
       });
   });
-}
-
-module.exports = {
-  gameClientRunnerTesting,
 };

@@ -1,12 +1,10 @@
 "use strict";
-
 const { app } = require("electron");
 const { createWindow, getMainWindow } = require("./window/main");
 const { createUpdateWindow } = require("./window/update");
 const { checkForUpdates } = require("./update");
-const handleIPC = require("./ipc");
-const log = require("electron-log");
 require("./cmd");
+require("./ipc");
 
 //electron忽略证书相关的错误.
 app.commandLine.appendSwitch("--ignore-certificate-errors", "true");
@@ -20,35 +18,28 @@ app.commandLine.appendSwitch("--disable-web-security", "true");
 const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
   app.quit();
-} else {
-  //当第二个实例被执行并且调用 app.requestSingleInstanceLock() 时，这个事件将在你的应用程序的首个实例中触发
-  app.on("second-instance", () => {
-    let mainWindow = getMainWindow();
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore();
-      mainWindow.focus();
+}
+
+//当第二个实例被执行并且调用 app.requestSingleInstanceLock() 时，这个事件将在你的应用程序的首个实例中触发
+app.on("second-instance", () => {
+  let mainWindow = getMainWindow();
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+  }
+});
+
+app.on("activate", () => {
+  createWindow();
+});
+
+(async () => {
+  await app.whenReady();
+  checkForUpdates().then((info) => {
+    if (info) {
+      //开启更新进程
+      return createUpdateWindow();
     }
-  });
-
-  app.on("ready", () => {
-    log.info("App ready...");
-    checkForUpdates().then((info) => {
-      if (info) {
-        //开启更新进程
-        return createUpdateWindow();
-      }
-      createWindow();
-      handleIPC();
-    });
-  });
-
-  app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") {
-      app.quit();
-    }
-  });
-
-  app.on("activate", () => {
     createWindow();
   });
-}
+})();

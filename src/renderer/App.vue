@@ -43,6 +43,9 @@ export default {
         mitt.emit("game-online");
       }
     });
+    ipcRenderer.on("game-testing", () => {
+      mitt.emit("game-testing");
+    });
 
     //监听改变顶部标题
     // watch(
