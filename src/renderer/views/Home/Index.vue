@@ -24,12 +24,12 @@
         :key="item"
       >
         <div class="item-img">
-          <span>START</span>
-          <img :src="skinsConverter(item.skin)" alt="" />
+          <img :src="skinsConverter(item.skin)" />
+          <div class="item-start-btn">
+            <span>{{ item.title }}</span>
+          </div>
         </div>
-        <div class="item-title">
-          {{ item.title }}
-        </div>
+        <div class="item-title">{{ item.title }}</div>
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@ export default {
       gameBox: [
         {
           skin: 87000,
-          title: "自定义房",
+          title: "嚎哭深渊",
           images: "static/images/skins/85000.jpg",
         },
         {
@@ -133,6 +133,7 @@ export default {
 }
 
 .item-img {
+  cursor: pointer;
   position: relative;
   overflow: hidden;
   border-radius: 5px;
@@ -143,10 +144,9 @@ export default {
   width: 222px;
   height: 140px;
   border-radius: 5px;
-  transition: all 1s;
+  /* transition: all 1s; */
 }
-.item-img span {
-  text-align: center;
+.item-start-btn span {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -158,10 +158,9 @@ export default {
 .item-title {
   color: #a2a2a2;
 }
-.item-img {
-}
-.item-img img:hover {
-  transform: scale(1.2);
+
+.item-img:hover {
+  transform: scale(1.05);
 }
 .item-img:after {
   content: "";
@@ -170,7 +169,7 @@ export default {
   left: 0;
   width: 100%;
   height: 20%;
-  background: -webkit-gradient(
+  /* background: -webkit-gradient(
     linear,
     left bottom,
     left top,
@@ -199,7 +198,7 @@ export default {
     rgb(0 0 0 / 59%) 42%,
     #00000026 85%,
     transparent
-  );
+  ); */
   opacity: 1;
   z-index: 0;
 }

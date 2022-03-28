@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="container">
     <Nav
       class="nav"
       v-show="isShow"
@@ -78,7 +78,7 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-#app {
+.container {
   font-family: Cascadia Mono Regular, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

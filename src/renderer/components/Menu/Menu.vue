@@ -42,17 +42,25 @@ export default {
         selectIcon: "UserOutlined",
       },
       {
-        path: "/",
-        title: "重开房间",
-        icon: "FlagOutlined",
-        selectIcon: "FlagOutlined",
+        path: "/game/team",
+        title: "开黑队友",
+        icon: "DribbbleCircleFilled",
+        selectIcon: "DribbbleCircleFilled",
+        hot: true,
       },
-      {
-        path: "/home/plugins",
-        title: "插件中心",
-        icon: "PlusSquareOutlined",
-        selectIcon: "PlusSquareFilled",
-      },
+      // ,
+      // {
+      //   path: "/",
+      //   title: "重开房间",
+      //   icon: "FlagOutlined",
+      //   selectIcon: "FlagOutlined",
+      // },
+      // {
+      //   path: "/home/plugins",
+      //   title: "插件中心",
+      //   icon: "PlusSquareOutlined",
+      //   selectIcon: "PlusSquareFilled",
+      // },
     ]);
     const router = useRouter();
     const route = useRoute();

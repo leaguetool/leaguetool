@@ -1,15 +1,9 @@
 <template>
-  <!-- <div class="skin-video">
-    <video autoplay="" loop="" muted="" src="static/video/home.mp4">
-      <source src="" type="video/mp4" />
-    </video>
-  </div> -->
-
   <div class="skin-background">
     <a-carousel
       ref="carouselRef"
       effect="fade"
-      autoplay
+      :autoplay="autoplay"
       :autoplaySpeed="autoplaySpeed"
       :before-change="onChange"
       :speed="speed"
@@ -26,7 +20,8 @@
 </template>
 <script>
 import mitt from "@/common/mitt";
-import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { ref, onMounted, watch } from "vue";
 
 export default {
   setup() {
@@ -61,6 +56,7 @@ export default {
     let carouselRef = ref(null);
     let speed = ref(time);
     let current = ref(0);
+    let autoplay = ref(true);
     const onChange = (from, to) => {
       current.value = to;
       mitt.emit("skin-background-change", {
@@ -88,12 +84,22 @@ export default {
         }, 1);
       });
     });
+    // 获取路由器实例
+    const route = useRoute();
+    watch(
+      () => route.path,
+      () => {
+        autoplay.value = route.meta.background || false;
+        console.log(autoplay);
+      }
+    );
 
     function skinsConverter(skin) {
       return `background:url(static/images/skins/${skin}.jpg) no-repeat left/ cover;background-size: 150%;`;
     }
 
     return {
+      autoplay,
       autoplaySpeed: 10000,
       current,
       speed,
@@ -128,7 +134,7 @@ export default {
   left: 0;
   width: 100%;
   height: 20%;
-  background: -webkit-gradient(
+  /* background: -webkit-gradient(
     linear,
     left bottom,
     left top,
@@ -157,7 +163,7 @@ export default {
     rgba(0, 0, 0, 0.2) 45%,
     transparent 85%,
     transparent
-  );
+  ); */
   opacity: 1;
   z-index: 0;
 }

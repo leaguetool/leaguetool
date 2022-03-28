@@ -83,30 +83,25 @@ async function startScanning() {
     .then(() => {
       return viewRegistryMessage(command);
     })
-    .then((leagueClientPath) => {
+    .then(async (leagueClientPath) => {
       console.log("获取到客户端路径：", leagueClientPath);
-      authString = fileRead(leagueClientPath);
-      if (!authString) {
+      const { port, token } = await getLcuToken(leagueClientPath);
+      //authString = fileRead(leagueClientPath);
+      if (!token) {
         //读取文件失败
         data.msg = "请稍后，可能是客户端正在启动中";
         console.log(data.msg);
       } else {
         store.set("gamePath", leagueClientPath);
-        //以冒号分开，分别是:进程名,PID,端口号,token,协议
-        //参数放在内存中
-        let agres = authString.split(":");
-        if (agres.length >= 4) {
-          //触发给主线程事件
-          data = {
-            port: agres[2],
-            token: agres[3],
-            protocol: agres[4],
-            username: "riot",
-            verification: "@",
-          };
-          store.set("gameInfo", data);
-          // console.log(data)
-        }
+        //触发给主线程事件
+        data = {
+          port: port,
+          token: token,
+          protocol: "https",
+          username: "riot",
+          verification: "@",
+        };
+        store.set("gameInfo", data);
       }
       return data;
     })
@@ -115,6 +110,51 @@ async function startScanning() {
       return data;
     });
 }
+
+const getLcuToken = async (dirPath) => {
+  // const appendGameToDir = config.get(`appendGameToDir`);
+  // const dir = `${
+  //   appendGameToDir ? `${dirPath}/Game` : dirPath
+  // }/Logs/LeagueClient Logs`;
+  const dir = `${dirPath}/Game/Logs/LeagueClient Logs`;
+  console.log(dir);
+  try {
+    return new Promise((resolve, reject) => {
+      fs.readdir(dir, async (error, data) => {
+        if (error) {
+          console.error(error);
+          return false;
+        }
+        const latest = data
+          .filter((f) => f.includes(`renderer.log`))
+          .sort((a, b) => a.localeCompare(b))
+          .slice(-3)
+          .shift();
+        fs.readFile(`${dir}/${latest}`, "utf8", function(err, data) {
+          const url = data.match(/https(.*)\/index\.html/)[1] || ``;
+          const token = url.match(/riot:(.*)@/)[1] || null;
+          const port = url.match(/:(\d+)/)[1] || null;
+          const urlWithAuth = `https${url}`;
+          resolve({ url, token, port, urlWithAuth });
+        });
+      });
+    });
+    // const latest = files
+    //   .filter((f) => f.includes(`renderer.log`))
+    //   .sort((a, b) => a.localeCompare(b))
+    //   .pop();
+
+    // const content = await fs.readFile(`${dir}/${latest}`, "utf8");
+
+    // const url = content.match(/https(.*)\/index\.html/)?.[1] ?? ``;
+    // const token = url.match(/riot:(.*)@/)?.[1] ?? null;
+    // const port = url.match(/:(\d+)/)?.[1] ?? null;
+    // const urlWithAuth = `https${url}`;
+  } catch (err) {
+    console.log(err);
+    return [null, null, null];
+  }
+};
 
 module.exports = { startScanning, onlineLeagueClient };
 

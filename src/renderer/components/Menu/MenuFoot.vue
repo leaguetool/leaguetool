@@ -26,7 +26,7 @@
       <!-- < /> -->
       <a-space :size="5" class="setting cursor-op">
         <BarsOutlined twoToneColor="#f9cc16" class="" />
-        <div>菜单</div>
+        <div>更多</div>
       </a-space>
     </a-popover>
   </div>
@@ -65,7 +65,7 @@ export default {
   line-height: 40px;
 }
 .setting-list .cursor-font {
-  font-size: 16px;
+  font-size: 14px;
   height: 40px;
   padding-left: 12px;
   transition: 500ms;

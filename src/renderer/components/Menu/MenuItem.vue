@@ -1,19 +1,14 @@
 <template>
-  <div>
-    <div
-      class="ment-item cursor-op"
-      :class="{ current: current === menu.path }"
-    >
-      <div
-        class="ment-item-head"
-        :class="{ current: current === menu.path }"
-      ></div>
+  <div class="menu-item-box">
+    <div class="ment-item cursor-op" :class="{ current: isCurrentPath }">
+      <div class="ment-item-head" :class="{ current: isCurrentPath }"></div>
       <a-space :size="14" class="ment-item-content">
         <component
           class="ment-item-icon"
           :is="current === menu.path ? menu.selectIcon : menu.icon"
         />
         <span>{{ menu.title }}</span>
+        <a-badge :color="hotColor" />
       </a-space>
     </div>
   </div>
@@ -27,7 +22,9 @@ import {
   PlusSquareOutlined,
   PlusSquareFilled,
   UserOutlined,
+  DribbbleCircleFilled,
 } from "@ant-design/icons-vue";
+import { computed } from "vue";
 export default {
   props: ["menu", "current"],
   components: {
@@ -37,14 +34,27 @@ export default {
     PlusSquareOutlined,
     PlusSquareFilled,
     UserOutlined,
+    DribbbleCircleFilled,
   },
-  setup() {
-    return {};
+  setup(props) {
+    let isCurrentPath = computed(() => props.menu.path === props.current);
+    let hotColor = computed(() =>
+      props.menu.hot
+        ? props.menu.path != props.current
+          ? "#f9cc16"
+          : null
+        : null
+    );
+    console.log(hotColor);
+    return { isCurrentPath, hotColor };
   },
 };
 </script>
 
-<style>
+<style scoped>
+.menu-item-box span {
+  color: #fff;
+}
 .ment-item {
   position: relative;
   overflow: hidden;
