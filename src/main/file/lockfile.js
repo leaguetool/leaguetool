@@ -111,45 +111,43 @@ async function startScanning() {
     });
 }
 
+//获取最新的
+const getNewLogsDir = (dirPath) => {
+  const dir = [
+    `${dirPath}/LeagueClient`,
+    `${dirPath}/Game/Logs/LeagueClient Logs`,
+  ];
+  let path = [];
+  dir.forEach((item) => {
+    let files = fs
+      .readdirSync(item)
+      .filter((f) => f.includes(`renderer.log`))
+      .sort((a, b) => a.localeCompare(b))
+      .map((file) => `${item}/` + file);
+    files.length > 0 && path.push.apply(path, files);
+  });
+  return path.slice(-3);
+};
+
 const getLcuToken = async (dirPath) => {
-  // const appendGameToDir = config.get(`appendGameToDir`);
-  // const dir = `${
-  //   appendGameToDir ? `${dirPath}/Game` : dirPath
-  // }/Logs/LeagueClient Logs`;
-  const dir = `${dirPath}/Game/Logs/LeagueClient Logs`;
-  console.log(dir);
   try {
     return new Promise((resolve, reject) => {
-      fs.readdir(dir, async (error, data) => {
-        if (error) {
-          console.error(error);
-          return false;
-        }
-        const latest = data
-          .filter((f) => f.includes(`renderer.log`))
-          .sort((a, b) => a.localeCompare(b))
-          .slice(-3)
-          .shift();
-        fs.readFile(`${dir}/${latest}`, "utf8", function(err, data) {
-          const url = data.match(/https(.*)\/index\.html/)[1] || ``;
-          const token = url.match(/riot:(.*)@/)[1] || null;
-          const port = url.match(/:(\d+)/)[1] || null;
-          const urlWithAuth = `https${url}`;
-          resolve({ url, token, port, urlWithAuth });
+      const latest = getNewLogsDir(dirPath);
+      // console.log(latest);
+      for (let index = 0; index < latest.length; index++) {
+        const element = latest[index];
+        fs.readFile(`${element}`, "utf8", function(err, data) {
+          let riot = data.match(/riot:(.*)@/);
+          if (riot) {
+            const url = data.match(/https(.*)\/index\.html/)[1] || ``;
+            const token = url.match(/riot:(.*)@/)[1] || null;
+            const port = url.match(/:(\d+)/)[1] || null;
+            const urlWithAuth = `https${url}`;
+            resolve({ url, token, port, urlWithAuth });
+          }
         });
-      });
+      }
     });
-    // const latest = files
-    //   .filter((f) => f.includes(`renderer.log`))
-    //   .sort((a, b) => a.localeCompare(b))
-    //   .pop();
-
-    // const content = await fs.readFile(`${dir}/${latest}`, "utf8");
-
-    // const url = content.match(/https(.*)\/index\.html/)?.[1] ?? ``;
-    // const token = url.match(/riot:(.*)@/)?.[1] ?? null;
-    // const port = url.match(/:(\d+)/)?.[1] ?? null;
-    // const urlWithAuth = `https${url}`;
   } catch (err) {
     console.log(err);
     return [null, null, null];

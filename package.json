@@ -1,6 +1,6 @@
 {
   "name": "leaguetool",
-  "version": "0.2.3",
+  "version": "0.2.7",
   "productName": "LeagueTool",
   "author": {
     "name": "Lemon",
@@ -12,6 +12,7 @@
   "scripts": {
     "start": "cross-env ELECTRON_DISABLE_SECURITY_WARNINGS=true vue-cli-service electron:serve",
     "build": "vue-cli-service electron:build",
+    "prebuild": "node ./build/prebuild.js",
     "postbuild": "node ./build/build.js"
   },
   "main": "background.js",
