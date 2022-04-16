@@ -1,0 +1,11 @@
+{
+  "id": "TimerServer",
+  "startLevel": 1,
+  "version": "1.0.0",
+  "services": [
+    {
+      "name": "TimerServer",
+      "service": "TimerServer.js"
+    }
+  ]
+}
