@@ -3,6 +3,7 @@ const { app } = require("electron");
 const { createWindow, getMainWindow } = require("./window/main");
 const { createUpdateWindow } = require("./window/update");
 const { checkForUpdates } = require("./update");
+require("./common");
 require("./cmd");
 require("./ipc");
 require("./plugin");

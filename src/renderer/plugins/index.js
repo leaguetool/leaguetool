@@ -3,3 +3,4 @@
 
 // let minima = new Minima(path.join(__dirname, "plugins"));
 // minima.start();
+console.log("The plugin was started successfully");

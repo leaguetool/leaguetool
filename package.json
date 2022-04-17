@@ -1,6 +1,6 @@
 {
   "name": "leaguetool",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "productName": "LeagueTool",
   "author": {
     "name": "Lemon",
@@ -10,7 +10,7 @@
   "description": "LCU client API tool",
   "private": true,
   "scripts": {
-    "start": "cross-env ELECTRON_DISABLE_SECURITY_WARNINGS=true vue-cli-service electron:serve",
+    "start": "vue-cli-service electron:serve",
     "build": "vue-cli-service electron:build",
     "prebuild": "node ./build/prebuild.js",
     "postbuild": "node ./build/build.js"
@@ -37,7 +37,7 @@
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "~3.1.4",
+    "@vue/compiler-sfc": "^3.1.4",
     "ali-oss": "^6.16.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
