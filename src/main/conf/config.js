@@ -1,8 +1,8 @@
 const { shell } = require("electron");
 
 const config = {
-  bug: "https://www.github.com",
-  github: "https://www.github.com",
+  bug: "https://github.com/good-ideal/leaguetool/issues",
+  github: "https://github.com/good-ideal/leaguetool",
 };
 
 //默认浏览器打开网站
