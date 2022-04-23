@@ -1,6 +1,6 @@
 {
   "name": "leaguetool",
-  "version": "0.2.9",
+  "version": "0.3.1",
   "productName": "LeagueTool",
   "author": {
     "name": "Lemon",
@@ -10,8 +10,9 @@
   "description": "LCU client API tool",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service electron:serve",
-    "build": "vue-cli-service electron:build",
+    "start": "yarn plugins && vue-cli-service electron:serve",
+    "build": "yarn plugins && vue-cli-service electron:build",
+    "plugins": "babel src/renderer/plugins -d dist_electron/output/plugins --copy-files",
     "prebuild": "node ./build/prebuild.js",
     "postbuild": "node ./build/build.js"
   },
@@ -25,8 +26,8 @@
     "electron-log": "^4.4.1",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.3.9",
-    "electron-util": "^0.17.2",
     "js-base64": "^3.6.1",
+    "minimajs-ext": "^1.2.38",
     "mitt": "^3.0.0",
     "node-schedule": "^2.0.0",
     "vue": "^3.1.5",
@@ -34,12 +35,31 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-bind": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@vue/cli-plugin-babel": "^5.0.4",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.1.4",
     "ali-oss": "^6.16.0",
-    "babel-eslint": "^10.1.0",
+    "copy-webpack-plugin": "^5.0.0",
     "cross-env": "^7.0.3",
     "electron": "^13.2.2",
     "electron-devtools-installer": "^3.1.0",
@@ -60,9 +80,6 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
     "rules": {}
   },
   "browserslist": [

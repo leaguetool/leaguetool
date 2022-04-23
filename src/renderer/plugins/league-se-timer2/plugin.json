@@ -1,6 +1,6 @@
 {
   "id": "TimerServer2",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "TimerServer.js",
   "author": "lemon"
 }

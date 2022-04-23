@@ -1,3 +1,9 @@
+// import { Minima } from "minimajs-ext";
+// import path from "path";
+
+// let minima = new Minima(path.join(__dirname, "../plugins"));
+// minima.start();
+
 const path = require("path");
 //导入fs
 const fs = require("fs");
@@ -8,7 +14,7 @@ const UTF8 = "utf-8";
 
 class Plugins {
   constructor() {
-    this.PLUGIN_PATH = "./";
+    this.PLUGIN_PATH = "plugins";
     //插件列表
     this.plugins = [];
 
@@ -34,7 +40,6 @@ class Plugins {
 
   //扫描插件
   scanPlugins() {
-    console.log(this.fileHandler.getPlugins());
     this.fileHandler.getPlugins().forEach((pluginDir) => {
       //读取插件的json配置
       const plugin = this.fileHandler.readPluginConfig(pluginDir);
@@ -91,14 +96,23 @@ class Plugin {
     this.main = main;
     this.author = author;
     this.pluginPath = pluginPath;
-    //启动插件
-    this.start = () => {
-      console.log(`[${this.id}] plugin started successfully`);
-    };
-    //暂停插件
-    this.end = () => {
-      console.log(`[${this.id}] plugin paused successfully`);
-    };
+  }
+  //启动插件
+  start() {
+    try {
+      let mainClass = require(`./${this.pluginPath}/${this.main}`).default;
+      this.mainInstance = new mainClass();
+      if (typeof this.mainInstance.start === "function") {
+        this.mainInstance.start(this);
+      }
+    } catch (error) {
+      throw new Error(`Plugin [${this.id}] loading error ${error.message}.`);
+    }
+    console.log(`[${this.id}] plugin started successfully`);
+  }
+  //暂停插件
+  end() {
+    console.log(`[${this.id}] plugin paused successfully`);
   }
 }
 

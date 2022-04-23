@@ -1,6 +1,12 @@
 {
   "id": "TimerServer",
   "version": "1.0.0",
-  "main": "index.js",
-  "author": "lemon"
+  "main": "TimerServer.js",
+  "author": "lemon",
+  "router": [
+    {
+      "path": "/update",
+      "name": "update"
+    }
+  ]
 }

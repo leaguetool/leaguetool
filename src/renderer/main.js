@@ -7,8 +7,4 @@ import "ant-design-vue/dist/antd.less";
 process.on("unhandledRejection", (error) => {
   console.error(error);
 });
-createApp(App)
-  .use(store)
-  .use(ant)
-  .use(router)
-  .mount("#app");
+createApp(App).use(store).use(ant).use(router).mount("#app");

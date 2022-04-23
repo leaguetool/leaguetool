@@ -1,5 +1,6 @@
 const path = require("path");
 const pkg = require("./package.json");
+const CopyPlugin = require("copy-webpack-plugin");
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -61,7 +62,18 @@ module.exports = {
   },
   publicPath: "./",
   assetsDir: "static",
-
+  //如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
+  productionSourceMap: false,
+  configureWebpack: {
+    plugins: [
+      new CopyPlugin([
+        {
+          from: path.resolve(__dirname, "dist_electron/output/plugins"),
+          to: path.resolve(__dirname, "dist_electron/output/bundled/plugins"),
+        },
+      ]),
+    ],
+  },
   css: {
     loaderOptions: {
       less: {
