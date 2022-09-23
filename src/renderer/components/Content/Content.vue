@@ -15,7 +15,7 @@ export default {};
 .league-content {
   width: 100%;
   height: calc(100vh - 52px);
-  padding: 0px 30px;
+  /* padding: 0px 30px; */
   margin-top: 30px;
 }
 

@@ -32,6 +32,7 @@ export default {
       routerHome: "/home",
     });
     const router = useRouter();
+    router.push(data.routerHome);
     const login = async () => {
       const pro = await ipcRenderer.invoke("login");
       console.log(pro);

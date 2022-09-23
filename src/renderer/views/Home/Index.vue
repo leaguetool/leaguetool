@@ -206,6 +206,7 @@ export default {
   background: rgba(128, 128, 128, 0.08);
 }
 .page-home-index {
+  padding: 0 30px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 .home-carousel {
