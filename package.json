@@ -20,7 +20,7 @@
   "homepage": "./",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "ant-design-vue": "^2.2.2",
+    "ant-design-vue": "^3.2.12",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "electron-log": "^4.4.1",
@@ -30,7 +30,7 @@
     "minimajs-ext": "^1.2.38",
     "mitt": "^3.0.0",
     "node-schedule": "^2.0.0",
-    "vue": "^3.1.5",
+    "vue": "^3.2.0",
     "vue-router": "^4.0.10",
     "vuex": "^4.0.2"
   },
