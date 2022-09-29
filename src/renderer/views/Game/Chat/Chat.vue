@@ -1,57 +1,41 @@
 <template>
   <div class="chat">
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
-    <Message v-for="chat in chatList" :msg="chat" :key="chat.time" />
+    <InfiniteList
+      :data="chatList"
+      infinite-scroll-distance="1"
+      :width="'100%'"
+      :height="574"
+      :itemSize="95"
+      :overscanCount="2"
+      :scrollToIndex="scrollToIndex"
+      scrollToAlignment="end"
+      v-slot="{ item, index }"
+    >
+      <Message :msg="item" :key="index" />
+    </InfiniteList>
   </div>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import Message from "./Message/Message.vue";
+import InfiniteList from "vue3-infinite-list";
 export default {
-  components: { Message },
+  components: { Message, InfiniteList },
   setup: () => {
     const store = useStore();
-    // let user = computed(() => store.state.user);
-    let user = computed(() => {
-      return store.state.user;
+    const scrollToIndex = ref(0);
+    const chatList = computed(() => {
+      console.log(store.state.chat.chatList.lenght);
+      if (store.state.chat.chatList.length > 0) {
+        scrollToIndex.value = store.state.chat.chatList.length - 1;
+      }
+      return store.state.chat.chatList;
     });
-    console.log(user.displayName);
-    const chatList = [
-      {
-        id: 1,
-        name: user.displayName,
-        avatar:
-          "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png",
-        content: "test",
-        time: "2021-01-01 12:00:00",
-        type: "text",
-        isSelf: true,
-      },
-    ];
-    console.log(user);
     return {
-      user,
       chatList,
+      scrollToIndex,
     };
   },
 };
@@ -62,5 +46,6 @@ export default {
   height: calc(100vh - 136px);
   padding-top: 10px;
   overflow: auto;
+  padding-right: 15px;
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
   <div class="chat-header">
     <div class="chat-title">英雄联盟开黑大厅 |</div>
-    <!-- <div class="chat-hot">🔥热度:32131人</div> -->
+
     <div class="chat-region">祖安 <SwapOutlined /></div>
+    <div class="chat-hot">🔥32131人</div>
   </div>
 </template>
 
@@ -27,6 +28,7 @@ export default {
   display: inline-block;
 }
 .chat-hot {
+  padding-left: 10px;
   font-size: 14px;
 }
 .chat-region {

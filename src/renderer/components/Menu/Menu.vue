@@ -35,12 +35,12 @@ export default {
         icon: "HomeOutlined",
         selectIcon: "HomeFilled",
       },
-      {
-        path: "/home/pro-file",
-        title: "个人信息",
-        icon: "UserOutlined",
-        selectIcon: "UserOutlined",
-      },
+      // {
+      //   path: "/home/pro-file",
+      //   title: "个人信息",
+      //   icon: "UserOutlined",
+      //   selectIcon: "UserOutlined",
+      // },
       {
         path: "/game/team",
         title: "开黑队友",

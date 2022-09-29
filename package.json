@@ -32,6 +32,7 @@
     "node-schedule": "^2.0.0",
     "vue": "^3.2.0",
     "vue-router": "^4.0.10",
+    "vue3-infinite-list": "^0.2.5",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
@@ -80,7 +81,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {}
+    "rules": {
+      "vue/valid-v-model": "off"
+    }
   },
   "browserslist": [
     "> 1%",
