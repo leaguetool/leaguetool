@@ -1,6 +1,6 @@
 {
   "name": "leaguetool",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "productName": "LeagueTool",
   "author": {
     "name": "Lemon",
@@ -32,8 +32,10 @@
     "node-schedule": "^2.0.0",
     "vue": "^3.2.0",
     "vue-router": "^4.0.10",
+    "vue-virtual-scroller": "^2.0.0-alpha.1",
     "vue3-infinite-list": "^0.2.5",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -82,7 +84,9 @@
       "eslint:recommended"
     ],
     "rules": {
-      "vue/valid-v-model": "off"
+      "vue/valid-v-model": "off",
+      "no-unused-vars": "off",
+      "no-empty-pattern": "off"
     }
   },
   "browserslist": [

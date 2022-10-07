@@ -14,15 +14,16 @@ export default {
   namespaced: true,
   state: {
     //头像
-    displayName: "召唤师",
+    displayName: "风车车的猫尾饼",
     profileIconId: 29,
     summonerId: 0,
     summonerLevel: 0,
     xpSinceLastLevel: 0,
     xpUntilNextLevel: 0,
-    avatar: "",
+    avatar: "https://joeschmoe.io/api/v1/random",
     onlineStatus: "",
     onlineStatusEnum,
+    uid: "",
   },
   mutations: {
     [types.USER_CURRENT_SUMMONER](state, user) {
@@ -33,6 +34,9 @@ export default {
     },
     [types.USER_SET_SUMMONER_STATUS](state, userStatus) {
       state.onlineStatus = userStatus;
+    },
+    [types.USER_SET_TOKEN](state, token) {
+      state.uid = token;
     },
   },
   actions: {
@@ -51,6 +55,10 @@ export default {
     //设置用户头像
     setAvatar({ commit }, profileIconId) {
       commit(types.USER_SET_SUMMONER_AVATAR, profileIconId);
+    },
+    //设置用户TOKEN
+    setToken({ commit }, token) {
+      commit(types.USER_SET_TOKEN, token);
     },
   },
   getters: {

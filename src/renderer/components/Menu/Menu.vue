@@ -43,7 +43,7 @@ export default {
       // },
       {
         path: "/game/team",
-        title: "开黑队友",
+        title: "开黑大厅",
         icon: "DribbbleCircleFilled",
         selectIcon: "DribbbleCircleFilled",
         hot: true,

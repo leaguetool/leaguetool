@@ -45,7 +45,7 @@ export default {
           : null
         : null
     );
-    console.log(hotColor);
+    // console.log(hotColor);
     return { isCurrentPath, hotColor };
   },
 };

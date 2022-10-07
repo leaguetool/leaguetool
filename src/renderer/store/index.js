@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-
+import createPersistedState from "vuex-persistedstate";
 /**
  * 自动引入当前文件夹下所有module
  * require.context(directory, useSubdirectories = false, regExp = /^.//);
@@ -17,4 +17,9 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 export default createStore({
   modules,
+  plugins: [
+    createPersistedState({
+      key: "leaguetool-client",
+    }),
+  ],
 });

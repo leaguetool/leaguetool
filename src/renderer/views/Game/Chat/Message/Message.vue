@@ -12,7 +12,7 @@
           {{ msg.name }}
         </div>
         <div class="chat-message-header-region">
-          <a-tag color="cyan">{{ msg.region }}</a-tag>
+          <a-tag color="cyan">{{ msg.region.name }}</a-tag>
         </div>
         <div class="chat-message-header-rank">
           <a-tag color="blue">{{ msg.rank }}</a-tag>
@@ -20,7 +20,24 @@
       </div>
       <!-- 消息内容 -->
       <div class="chat-message-content">
-        <div class="chat-message-content-text">{{ msg.content }}</div>
+        <div class="chat-message-content-text">
+          {{ msg.content }}
+          <!-- <a-image
+            :width="200"
+            :src="`https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?${random}`"
+          >
+            <template #placeholder>
+              <a-image
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200"
+                :width="200"
+                :preview="false"
+              />
+            </template>
+          </a-image>
+          <a-button type="primary" @click="random = Date.now()"
+            >reload</a-button
+          > -->
+        </div>
       </div>
     </div>
   </div>
@@ -29,6 +46,7 @@
 <script>
 //导入ant的message组件
 import { message } from "ant-design-vue";
+// import {ref} from 'vue'
 export default {
   props: {
     msg: { type: Object },
@@ -60,22 +78,21 @@ export default {
   margin-left: 10px;
 }
 .chat-self .chat-message-content{
-  
+
 } */
 .chat-self .chat-message-content .chat-message-content-text {
   background-color: #40ff7091;
 }
 .chat-message {
   display: flex;
-  margin-bottom: 20px;
+  padding: 15px 15px 15px 0px;
   min-height: 60px;
   color: rgb(226, 226, 226);
 }
 .chat-message-avatar {
-  width: 40px;
-  height: 40px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  margin-right: 10px;
 }
 .chat-message-header {
   display: flex;
@@ -93,7 +110,7 @@ export default {
 }
 
 .chat-message-content {
-  padding-left: 20px;
+  padding-left: 15px;
 }
 .chat-message-content .chat-message-content-text {
   width: 100%;
@@ -102,6 +119,14 @@ export default {
   margin-top: 10px;
   padding: 10px;
   background-color: #22202291;
+  word-break: break-all;
+  letter-spacing: 1px;
+
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
   /* min-height: 80px; */
 }
 </style>

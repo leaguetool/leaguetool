@@ -1,16 +1,19 @@
 <template>
-  <div class="container">
-    <Nav
-      class="nav"
-      v-show="isShow"
-      :title="appName"
-      :showIcon="appName != ''"
-    />
-    <div id="content-holder">
-      <router-view class="router-content" />
+  <a-config-provider :locale="locale">
+    <div class="container">
+      <Nav
+        class="nav"
+        v-show="isShow"
+        :title="appName"
+        :showIcon="appName != ''"
+      />
+
+      <div id="content-holder">
+        <router-view class="router-content" />
+      </div>
+      <BackGround v-show="isShow" />
     </div>
-    <BackGround v-show="isShow" />
-  </div>
+  </a-config-provider>
 </template>
 
 <script>
@@ -20,6 +23,10 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import Nav from "./components/Nav/Nav.vue";
 import BackGround from "./components/BackGround.vue";
+import zhCN from "ant-design-vue/es/locale/zh_CN";
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+dayjs.locale("zh-cn");
 export default {
   name: "App",
   components: {
@@ -66,6 +73,7 @@ export default {
     return {
       appName,
       isShow,
+      locale: zhCN,
     };
   },
 };
@@ -77,6 +85,10 @@ export default {
   src: url("./common/font/CascadiaMono.ttf");
   font-weight: normal;
   font-style: normal;
+}
+body {
+  margin: 0px;
+  padding: 0px;
 }
 .container {
   font-family: Cascadia Mono Regular, Avenir, Helvetica, Arial, sans-serif;

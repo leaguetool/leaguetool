@@ -14,13 +14,13 @@ const lockfile = "/LeagueClient/lockfile";
 //"reg query HKEY_CURRENT_USER\\SOFTWARE\\Tencent\\LOL /v InstallPath"
 //获取客户端路径
 function viewRegistryMessage(command) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     const gamePath = store.get("gamePath");
     if (gamePath) {
       //如果手动设置过路径，那么就先采用该路径
       return resolve(gamePath);
     }
-    exec(command, function(err, stdout, stderr) {
+    exec(command, function (err, stdout, stderr) {
       if (err) {
         reject(err);
         // return console.error(err);
@@ -43,7 +43,7 @@ function viewRegistryMessage(command) {
 function onlineLeagueClient() {
   let cmd = process.platform === "win32" ? "tasklist" : "ps aux";
   return new Promise((resolve, reject) => {
-    exec(cmd, function(err, stdout, stderr) {
+    exec(cmd, function (err, stdout, stderr) {
       if (err) {
         return console.error(err);
       }
@@ -85,7 +85,9 @@ async function startScanning() {
     })
     .then(async (leagueClientPath) => {
       console.log("获取到客户端路径：", leagueClientPath);
-      const { port, token } = await getLcuToken(leagueClientPath);
+      const { port, token } =
+        { port: 61518, token: "UmdR-hLu41NczqkbttdL9w" } ||
+        (await getLcuToken(leagueClientPath));
       //authString = fileRead(leagueClientPath);
       if (!token) {
         //读取文件失败
@@ -113,6 +115,8 @@ async function startScanning() {
 
 //获取最新的
 const getNewLogsDir = (dirPath) => {
+  //2022.10.5采用lock
+
   const dir = [
     `${dirPath}/LeagueClient`,
     `${dirPath}/Game/Logs/LeagueClient Logs`,
@@ -136,7 +140,7 @@ const getLcuToken = async (dirPath) => {
       // console.log(latest);
       for (let index = 0; index < latest.length; index++) {
         const element = latest[index];
-        fs.readFile(`${element}`, "utf8", function(err, data) {
+        fs.readFile(`${element}`, "utf8", function (err, data) {
           let riot = data.match(/riot:(.*)@/);
           if (riot) {
             const url = data.match(/https(.*)\/index\.html/)[1] || ``;

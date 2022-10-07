@@ -1,6 +1,24 @@
 <template>
   <div class="chat-footer-container">
-    <div class="chat-footer-emoji cursor-op"><smile-outlined /></div>
+    <div class="chat-footer-emoji cursor-op" @click="emoji()">
+      <smile-outlined />
+    </div>
+    <div class="chat-footer-hotword cursor-op">
+      <a-dropdown :trigger="['click']" placement="top">
+        <span>热词</span>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item
+              v-for="(word, index) in hotWord"
+              :key="index"
+              @click="hotWordSend(word)"
+            >
+              {{ word }}
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </div>
     <div class="chat-footer-input">
       <a-textarea
         v-model:value="messageText"
@@ -34,24 +52,22 @@ export default {
     const displayName = computed(() => {
       return store.state.user.displayName;
     });
-    let sendMessage = () => {
-      //判断messageText不能为空并且用ant弹出提示
-      if (messageText.value === "") {
+    let sendMessage = (word) => {
+      //判断messageText, word不能为空并且用ant弹出提示
+      if (!word && messageText.value === "") {
         message.warning("内容不能为空哦！", 1, null);
         return;
       }
 
       store
-        .dispatch("chat/addMessage", {
-          id: Math.random(),
-          name: "dsa",
-          avatar: `https://api.multiavatar.com/${
-            new Date().getTime() + Math.random()
-          }.png`,
-          content: messageText.value,
+        .dispatch("chat/sendMessage", {
+          name: store.state.user.displayName,
+          uid: store.state.user.uid,
+          avatar: store.state.user.avatar,
+          content: word || messageText.value,
           time: new Date().getTime(),
           type: "text",
-          region: "祖安",
+          region: store.state.chat.currentRegion,
           rank: "最强王者",
           isSelf: true,
         })
@@ -60,7 +76,31 @@ export default {
           messageText.value = "";
         });
     };
-    return { messageText, sendMessage, displayName };
+
+    //使用热词发送
+    let hotWordSend = (hotWord) => {
+      sendMessage(hotWord);
+    };
+
+    //TODO 表情待开发
+    const emoji = () => {
+      message.warning("开发中...", 1, null);
+      return;
+    };
+
+    return {
+      messageText,
+      displayName,
+      sendMessage,
+      emoji,
+      hotWordSend,
+      hotWord: [
+        "大乱斗快来人加我",
+        "求大腿有麦会躺",
+        "有妹妹来大佬能C的",
+        "灵活4=1，来人秒开",
+      ],
+    };
   },
 };
 </script>
@@ -77,11 +117,19 @@ export default {
 
 .chat-footer-input {
   width: 100%;
-  padding-left: 20px;
+  /* padding-left: 20px; */
 }
 .chat-footer-emoji {
   display: flex;
   font-size: 20px;
+}
+.chat-footer-hotword {
+  display: flex;
+  width: 60px;
+}
+.chat-footer-emoji,
+.chat-footer-hotword {
+  padding: 10px;
 }
 .chat-footer-input .ant-input {
   background-color: #fff0;
