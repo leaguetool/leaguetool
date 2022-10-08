@@ -23,8 +23,9 @@
       <a-textarea
         v-model:value="messageText"
         :bordered="false"
+        @pressEnter="handleEnter"
         :auto-size="{ minRows: 1, maxRows: 2 }"
-        placeholder="文明发言，友好交友"
+        placeholder="文明发言，友好交友  Ctrl + Enter 换行"
         enter-button="发送"
         size="large"
       />
@@ -88,12 +89,26 @@ export default {
       return;
     };
 
+    //回车发送 ctrl+enter 换行
+    const handleEnter = (event) => {
+      if (event.keyCode == 13) {
+        //判断是否按下了ctrl键
+        if (!event.ctrlKey) {
+          event.preventDefault();
+          sendMessage();
+        } else {
+          messageText.value = messageText.value + "\n";
+        }
+      }
+    };
+
     return {
       messageText,
       displayName,
       sendMessage,
       emoji,
       hotWordSend,
+      handleEnter,
       hotWord: [
         "大乱斗快来人加我",
         "求大腿有麦会躺",

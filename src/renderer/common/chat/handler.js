@@ -1,5 +1,6 @@
 import store from "@/store/index.js";
 import ChatJs from "@/common/chat/chat.js";
+import { message } from "ant-design-vue";
 
 let Handler = function () {
   this.onopen = function (event, ws) {
@@ -36,24 +37,25 @@ let Handler = function () {
         break;
       }
     }
+  };
 
-    this.onclose = function (e, ws) {
-      // error(e, ws)
-    };
+  this.onclose = function (e, ws) {
+    // error(e, ws)
+  };
 
-    this.onerror = function (e, ws) {
-      // error(e, ws)
-    };
+  this.onerror = function (e, ws) {
+    // error(e, ws)
+    message.error("连接到开黑大厅服务器失败，重试中...", 1, null);
+  };
 
-    /**
-     * 发送心跳，本框架会自动定时调用该方法，请在该方法中发送心跳
-     * @param {*} ws
-     */
-    this.ping = function (ws) {
-      // log("发心跳了")
-      // ws.send("心跳内容");
-      ChatJs.getInstance().sendPingMsg();
-    };
+  /**
+   * 发送心跳，本框架会自动定时调用该方法，请在该方法中发送心跳
+   * @param {*} ws
+   */
+  this.ping = function (ws) {
+    // log("发心跳了")
+    // ws.send("心跳内容");
+    ChatJs.getInstance().sendPingMsg();
   };
 };
 
