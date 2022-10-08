@@ -62,24 +62,25 @@
 
 <script>
 //导入notification-outlined
+import Notice from "./Notice.vue";
 import { NotificationFilled } from "@ant-design/icons-vue";
 import { Modal, message } from "ant-design-vue";
-import { ref, computed } from "vue";
+import { ref, computed, createVNode } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
     NotificationFilled,
   },
   setup() {
+    let visible = ref(false);
     const store = useStore();
     const notification = computed(() => {
       return store.state.system.notice;
     });
-    // const notification = ref("公告：本工具用于英雄联盟玩家开黑寻找队友");
     const notificationModel = () => {
       Modal.warning({
         title: "公告",
-        content: notification.value,
+        content: createVNode(Notice, { notification: notification.value }),
       });
     };
     const adminUser = ref([
@@ -113,6 +114,7 @@ export default {
       notification,
       adminUser,
       chatUser,
+      visible,
       notificationModel,
       chatUserModel,
     };
