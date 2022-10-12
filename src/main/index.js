@@ -6,7 +6,8 @@ const { checkForUpdates } = require("./update");
 require("./common");
 require("./cmd");
 require("./ipc");
-require("./plugin");
+//插件思想先暂时关闭
+// require("./plugin");
 
 //electron忽略证书相关的错误.
 app.commandLine.appendSwitch("--ignore-certificate-errors", "true");
