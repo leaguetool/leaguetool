@@ -1,11 +1,22 @@
 import store from "@/store/index.js";
 import ChatJs from "@/common/chat/chat.js";
 import { message } from "ant-design-vue";
-
+//定义一个key
+const key = "chatConnect";
+let loading = null;
 let Handler = function () {
   this.onopen = function (event, ws) {
     // ws.send("hello 连上了哦");
     //document.getElementById('contentId').innerHTML += 'hello 连上了哦<br>';
+    loading && loading() && (loading = null);
+    message.success({
+      content: "连接到开黑大厅成功",
+      key,
+      duration: 2,
+      style: {
+        marginTop: "30px",
+      },
+    });
   };
 
   /**
@@ -41,11 +52,24 @@ let Handler = function () {
 
   this.onclose = function (e, ws) {
     // error(e, ws)
+    loading = null;
   };
 
   this.onerror = function (e, ws) {
     // error(e, ws)
-    message.error("连接到开黑大厅服务器失败，重试中...", 1, null);
+    // message.error("连接到开黑大厅服务器失败，重试中...", 1, null);\
+    console.log("连接ws失败~");
+    if (loading) {
+      return;
+    }
+    loading = message.loading({
+      content: "连接到开黑大厅服务器失败，重试中...",
+      key,
+      style: {
+        marginTop: "30px",
+      },
+      duration: 0,
+    });
   };
 
   /**

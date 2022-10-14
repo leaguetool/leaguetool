@@ -1,6 +1,7 @@
 const { app, ipcMain, dialog } = require("electron");
 const { startScanning } = require("./file/lockfile");
 const { openBugreport, openGithub } = require("./conf/config");
+const { checkForUpdates } = require("./update");
 const {
   send: sendMainWindow,
   getMainWindow,
@@ -54,4 +55,10 @@ ipcMain.on("closeApp", () => {
 //最小化
 ipcMain.on("minimizeApp", () => {
   getMainWindow().minimize();
+});
+
+//检测更新
+ipcMain.handle("checkUpdate", async () => {
+  console.log("开始检测更新");
+  return checkForUpdates(true);
 });

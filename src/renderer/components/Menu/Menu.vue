@@ -75,7 +75,7 @@ export default {
       gotoPath("/home/pro-file");
     };
 
-    let current = ref(menus[0].path);
+    let current = ref(route.path || menus[0].path);
     watch(
       () => route.path,
       (newValue) => {

@@ -18,8 +18,8 @@ export default {
     getNotice({ commit }) {
       return new Promise(() => {
         systemApi.getNotice().then((data) => {
-          console.log(data);
-          commit(types.SYSTEM_SET_NOTICE, data);
+          console.log(data.data);
+          commit(types.SYSTEM_SET_NOTICE, data.data);
         });
       });
     },

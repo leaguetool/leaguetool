@@ -86,7 +86,7 @@ export default {
       () => route.path,
       () => {
         autoplay.value = route.meta.background || false;
-        console.log(autoplay);
+        // console.log(autoplay);
       }
     );
 

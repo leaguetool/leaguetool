@@ -22,7 +22,7 @@ function sendContentToWindow(key, text) {
   getUpdateWindow().webContents.send(key, text);
 }
 
-export const checkForUpdates = () => {
+export const checkForUpdates = (startApp) => {
   // 在下载之前将autoUpdater的autoDownload属性设置成false，通过渲染进程触发主进程事件来实现这一设置(将自动更新设置成false)
   autoUpdater.autoDownload = false;
 
@@ -32,7 +32,11 @@ export const checkForUpdates = () => {
       autoUpdater.checkForUpdates();
     } else {
       //开发环境不检测更新，直接跳过。
-      resolve();
+      if (startApp) {
+        resolve({ logs: ["1、支持应用内升级版本"], version: "0.3.6" });
+      } else {
+        resolve();
+      }
     }
 
     let message = {
@@ -43,19 +47,19 @@ export const checkForUpdates = () => {
     };
 
     //出现错误
-    autoUpdater.on("error", function(error) {
+    autoUpdater.on("error", function (error) {
       //   console.log(error);
       sendStatusToWindow(message.error);
     });
 
     //检测更新
-    autoUpdater.on("checking-for-update", function() {
+    autoUpdater.on("checking-for-update", function () {
       //   console.log("checking-for-update");
       sendStatusToWindow(message.checking);
     });
 
     //有可用的新版本
-    autoUpdater.on("update-available", function(info) {
+    autoUpdater.on("update-available", function (info) {
       //TODO: 有新版本，打开更新渲染进程。
       sendStatusToWindow(message.updateAva);
       sendStatusToWindow(info);
@@ -64,32 +68,35 @@ export const checkForUpdates = () => {
     });
 
     //没有新版本
-    autoUpdater.on("update-not-available", function() {
+    autoUpdater.on("update-not-available", function () {
       store.delete("versionInfo");
       sendStatusToWindow(message.updateNotAva);
       resolve();
     });
 
     // 更新下载进度事件
-    autoUpdater.on("download-progress", function(progressObj) {
+    autoUpdater.on("download-progress", function (progressObj) {
       //TODO：在更新渲染进程中持续获取下载进度条渲染
       sendStatusToWindow(JSON.stringify(progressObj));
       sendContentToWindow("app-update-progress", progressObj);
     });
 
     //下载完成事件
-    autoUpdater.on("update-downloaded", function(
-      event,
-      releaseNotes,
-      releaseName,
-      releaseDate,
-      updateUrl,
-      quitAndUpdate
-    ) {
-      sendStatusToWindow("下载完成，开始静默安装");
-      //isSilent静默安装  isForceRunAfter完成后运行应用程序
-      autoUpdater.quitAndInstall(true, true);
-    });
+    autoUpdater.on(
+      "update-downloaded",
+      function (
+        event,
+        releaseNotes,
+        releaseName,
+        releaseDate,
+        updateUrl,
+        quitAndUpdate
+      ) {
+        sendStatusToWindow("下载完成，开始静默安装");
+        //isSilent静默安装  isForceRunAfter完成后运行应用程序
+        autoUpdater.quitAndInstall(true, true);
+      }
+    );
 
     // TODO: 手动下载更新文件
     ipcMain.handle("confirm-downloadUpdate", () => {
