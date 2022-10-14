@@ -24,7 +24,7 @@ async function putLatest() {
       UPDATE_PATH + "/latest.yml",
       path.normalize(`${releasePath}/latest.yml`)
     );
-    console.log(result);
+    console.log(`上传${releasePath}成功：`, result.url);
   } catch (e) {
     console.log(e);
   }
@@ -37,7 +37,7 @@ async function putExe() {
       UPDATE_LAST + `/LeagueTool Setup ${pck.version}.exe`,
       path.normalize(`${releasePath}/LeagueTool Setup ${pck.version}.exe`)
     );
-    console.log(result);
+    console.log(`上传${releasePath}成功：`, result.url);
   } catch (e) {
     console.log(e);
   }
@@ -52,12 +52,13 @@ async function putBlockMap() {
         `${releasePath}/LeagueTool Setup ${pck.version}.exe.blockmap`
       )
     );
-    console.log(result);
+    console.log(`上传${releasePath}成功：`, result.url);
   } catch (e) {
     console.log(e);
   }
 }
-
-putLatest();
-putExe();
-putBlockMap();
+//创建一个任务队列
+const taskQueue = [putLatest(), putExe(), putBlockMap()];
+Promise.all(taskQueue).then(() => {
+  console.log("\x1b[32m", `上传${taskQueue.length}个文件成功，发布完成~`);
+});

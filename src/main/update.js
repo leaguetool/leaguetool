@@ -5,7 +5,7 @@
  * support auto updating. Code Signing with a valid certificate is required.
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
-const { app, ipcMain } = require("electron");
+const { app } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const { getUpdateWindow } = require("./window/update");
 const store = require("./store");
@@ -97,13 +97,13 @@ export const checkForUpdates = (startApp) => {
         autoUpdater.quitAndInstall(true, true);
       }
     );
-
-    // TODO: 手动下载更新文件
-    ipcMain.handle("confirm-downloadUpdate", () => {
-      let versionInfo = store.get("versionInfo");
-      sendStatusToWindow(versionInfo);
-      sendContentToWindow("app-update-version", versionInfo);
-      autoUpdater.downloadUpdate();
-    });
   });
+};
+
+//下载更新包
+export const downloadUpdate = () => {
+  let versionInfo = store.get("versionInfo");
+  sendStatusToWindow(versionInfo);
+  sendContentToWindow("app-update-version", versionInfo);
+  autoUpdater.downloadUpdate();
 };

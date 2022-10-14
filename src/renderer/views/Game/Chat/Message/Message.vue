@@ -121,6 +121,7 @@ export default {
   background-color: #22202291;
   word-break: break-all;
   letter-spacing: 1px;
+  white-space: pre-wrap;
 
   -webkit-user-select: text;
   -khtml-user-select: text;

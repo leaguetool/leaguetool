@@ -7,7 +7,7 @@ const path = require("path");
 const DEFAULT_NOTES_CONFIG = [
   "1、修复若干问题，提升产品体验",
   "2、优化系统体验",
-  `3、如果遇到其他问题需要帮助，请与我联系 ${pck.author.email}`,
+  `3、更新失败请反馈Q群810322958`,
 ];
 /**
  * 打包后进行更新版本的日志添加

@@ -1,7 +1,8 @@
 const { app, ipcMain, dialog } = require("electron");
 const { startScanning } = require("./file/lockfile");
 const { openBugreport, openGithub } = require("./conf/config");
-const { checkForUpdates } = require("./update");
+const { checkForUpdates, downloadUpdate } = require("./update");
+const { createUpdateWindow } = require("./window/update");
 const {
   send: sendMainWindow,
   getMainWindow,
@@ -57,8 +58,21 @@ ipcMain.on("minimizeApp", () => {
   getMainWindow().minimize();
 });
 
-//检测更新
+//检测更新 获取版本信息
 ipcMain.handle("checkUpdate", async () => {
   console.log("开始检测更新");
   return checkForUpdates(true);
+});
+
+//版本更新，触发更新
+ipcMain.on("updateApp", () => {
+  //隐藏主界面
+  getMainWindow().hide();
+  //创建更新视图
+  createUpdateWindow();
+});
+
+// TODO: 手动下载更新文件
+ipcMain.handle("confirm-downloadUpdate", () => {
+  downloadUpdate();
 });

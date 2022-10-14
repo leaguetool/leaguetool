@@ -48,6 +48,7 @@ import { notification } from "ant-design-vue";
 import { Modal } from "ant-design-vue";
 import { createVNode, ref } from "vue";
 import UpdateVNode from "./UpdateVNode";
+import { convertFileSize, convertDateFormat } from "@/common/converter";
 
 export default {
   components: {
@@ -82,18 +83,35 @@ export default {
     };
 
     const updateApp = (info) => {
+      if (!info) {
+        return;
+      }
+      //info是update-available检测更新返回的信息并保存的
+      // info = {
+      //   version: "2.3.4",
+      //   releaseNotes: ["修复了若干问题"],
+      //   files: [
+      //     {
+      //       size: 57427045,
+      //     },
+      //   ],
+      //   releaseDate: "2022-10-14T12:47:34.647Z",
+      // };
       Modal.confirm({
-        title: `检测到新版本 v${info.version}`,
+        title: `更新到新版本 v${info.version}`,
         icon: createVNode(DownloadOutlined),
         content: createVNode(UpdateVNode, {
-          logs: info.logs,
+          logs: info.releaseNotes,
+          size: convertFileSize(info.files[0].size),
+          time: convertDateFormat(info.releaseDate),
         }),
         okText: "立即升级",
         cancelText: "关闭",
         async onOk() {
           try {
             return await new Promise((resolve, reject) => {
-              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+              // setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+              ipcRenderer.send("updateApp");
             });
           } catch (e) {
             return console.log("Oops errors!");
