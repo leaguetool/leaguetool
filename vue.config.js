@@ -22,6 +22,7 @@ module.exports = {
       customFileProtocol: "./",
 
       builderOptions: {
+        beforePack: "build/bytenode/index.js",
         //asar包是否压缩加密
         asar: true,
         appId: "com.leaguetool.app",
@@ -33,9 +34,9 @@ module.exports = {
           target: [
             {
               target: "nsis", //利用nsis制作安装程序
-              arch: [
-                "ia32", //打包32位64位也能使用
-              ],
+              // arch: [
+              //   "ia32", //打包32位64位也能使用
+              // ],
             },
           ],
         },
@@ -54,6 +55,7 @@ module.exports = {
         },
       },
       preload: "public/preload.js",
+      externals: ["bytenode"],
     },
   },
   chainWebpack: (config) => {
@@ -68,10 +70,6 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new CopyPlugin([
-        {
-          from: path.resolve(__dirname, "dist_electron/output/plugins"),
-          to: path.resolve(__dirname, "dist_electron/output/bundled/plugins"),
-        },
         {
           from: path.resolve(__dirname, "dist_electron/output/plugins"),
           to: path.resolve(__dirname, "dist_electron/output/bundled/plugins"),

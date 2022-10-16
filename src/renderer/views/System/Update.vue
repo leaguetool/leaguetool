@@ -1,19 +1,24 @@
 <template>
-  <div
-    class="app-update"
-    style="background: url(static/images/update_bg.jpg) no-repeat center center;"
-  >
-    <div class="app-update-title">版本更新 {{ versionTxt }}</div>
-    <div class="app-update-content">
-      <div v-for="log in update.logs" :key="log" v-html="log"></div>
-    </div>
-    <div class="app-update-progress">
-      <a-progress
-        :success="{ percent: update.percent, strokeColor: '#87d068' }"
-        :stroke-color="strokeColor"
-        :percent="update.percent"
-        :strokeWidth="strokeWidth"
-      />
+  <div class="app-update-box">
+    <div
+      class="app-update-bg"
+      style="
+        background: url(static/images/update_bg.jpg) no-repeat center center;
+      "
+    ></div>
+    <div class="app-update">
+      <div class="app-update-title">版本更新 {{ versionTxt }}</div>
+      <div class="app-update-content">
+        <div v-for="log in update.logs" :key="log" v-html="log"></div>
+      </div>
+      <div class="app-update-progress">
+        <a-progress
+          :strokeColor="strokeColor"
+          :percent="update.percent"
+          :strokeWidth="strokeWidth"
+          status="active"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -55,14 +60,29 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .app-update {
+  position: absolute;
   width: 100%;
   height: calc(100vh);
   padding: 25px;
-  color: rgb(226, 226, 226);
+  color: #fff !important;
 }
-
+.app-update-bg {
+  z-index: 1;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: calc(100vh);
+}
+.app-update-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 0;
+  background: inherit;
+  filter: blur(5px);
+}
 .app-update .app-update-title {
   font-size: 20px;
   font-weight: 600;
@@ -79,5 +99,8 @@ export default {
 
 .app-update .app-update-content:hover {
   overflow-y: auto;
+}
+.app-update .app-update-progress .ant-progress .ant-progress-text {
+  color: #fff;
 }
 </style>
