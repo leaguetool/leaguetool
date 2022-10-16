@@ -28,6 +28,9 @@ export const LoginLoL = () => {
   loginLoL.once("ready-to-show", () => {
     loginLoL.show();
   });
+  loginLoL.on("closed", () => {
+    loginLoL = null;
+  });
 };
 
 //关闭登陆框

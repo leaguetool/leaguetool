@@ -1,6 +1,7 @@
 import * as types from "../mutation-types";
 import { convertProfileIcon } from "@/common/converter";
 import userApi from "@/api/user";
+import ChatJs from "@/common/chat/chat.js";
 
 const onlineStatusEnum = {
   chat: "在线",
@@ -23,7 +24,9 @@ export default {
     avatar: "https://game.gtimg.cn/images/lol/act/img/profileicon/29.png",
     onlineStatus: "",
     onlineStatusEnum,
+    rank: "",
     uid: "",
+    token: "",
   },
   mutations: {
     [types.USER_CURRENT_SUMMONER](state, user) {
@@ -36,7 +39,22 @@ export default {
       state.onlineStatus = userStatus;
     },
     [types.USER_SET_TOKEN](state, token) {
-      state.uid = token;
+      state.token = token;
+    },
+    [types.USER_LOGOUT](state) {
+      state.token = "";
+      state.displayName = "请登陆";
+      state.profileIconId = 29;
+      state.summonerId = 0;
+      state.summonerLevel = 0;
+      state.xpSinceLastLevel = 0;
+      state.xpUntilNextLevel = 0;
+      state.avatar =
+        "https://game.gtimg.cn/images/lol/act/img/profileicon/29.png";
+      state.onlineStatus = "";
+      state.rank = "";
+      state.uid = "";
+      ChatJs.getInstance().logout();
     },
   },
   actions: {
@@ -63,6 +81,11 @@ export default {
     //设置用户
     setUser({ commit }, userInfo) {
       commit(types.USER_CURRENT_SUMMONER, userInfo);
+      ChatJs.getInstance().login(userInfo.uid, userInfo.area);
+    },
+    //退出登陆
+    logout({ commit, rootState }) {
+      commit(types.USER_LOGOUT);
     },
   },
   getters: {

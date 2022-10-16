@@ -10,6 +10,7 @@ let reconnInterval = 1000; // 重连间隔时间，单位：毫秒
 let binaryType = "blob"; // 'blob' or 'arraybuffer';//arraybuffer是字节
 let mshandler = new handler();
 let myname = "蔡龙";
+let status = false;
 export default class ChatJs {
   constructor() {
     this.instance = null;
@@ -27,12 +28,12 @@ export default class ChatJs {
     return this.instance;
   }
 
-  init(name, region) {
-    console.log("初始化ws");
+  init(uid, region) {
     if (this.tio == null) {
+      console.log("初始化ws");
       this.tio = {};
       this.createWs();
-      let queryString = "name=" + name + "&region=" + region;
+      let queryString = "uid=" + uid + "&region=" + region;
 
       let param = "";
 
@@ -53,7 +54,6 @@ export default class ChatJs {
   }
 
   createWs() {
-    console.log(this.tio);
     this.tio.ws = {};
     /**
      * @param {*} ws_protocol wss or ws
@@ -120,6 +120,7 @@ export default class ChatJs {
         ws.binaryType = this.binaryType; // 'arraybuffer'; // 'blob' or 'arraybuffer';//arraybuffer是字节
         var self = this;
         ws.onopen = function (event) {
+          self.status = true;
           self.handler.onopen.call(self.handler, event, ws);
           self.lastInteractionTime(new Date().getTime());
 
@@ -132,6 +133,7 @@ export default class ChatJs {
           self.lastInteractionTime(new Date().getTime());
         };
         ws.onclose = function (event) {
+          self.status = false;
           clearInterval(self.pingIntervalId); // clear send heartbeat task
 
           try {
@@ -139,10 +141,12 @@ export default class ChatJs {
           } catch (error) {
             console.error(error);
           }
-
-          self.reconn(event);
+          if (!self.closeStatus) {
+            self.reconn(event);
+          }
         };
         ws.onerror = function (event) {
+          self.status = false;
           self.handler.onerror.call(self.handler, event, ws);
         };
 
@@ -169,6 +173,20 @@ export default class ChatJs {
         this.ws.send(data);
       };
     };
+  }
+
+  login(uid, area) {
+    this.logout();
+    this.init(uid, area);
+  }
+
+  //退出登陆
+  logout() {
+    if (this.tio) {
+      this.tio.ws.closeStatus = true;
+      this.tio.ws.ws.close();
+      this.tio = null;
+    }
   }
 
   //发送聊天信息

@@ -5,7 +5,7 @@
     <div class="chat-region cursor-op" @click="changeRegion()">
       {{ currentRegion.name }} <SwapOutlined />
     </div>
-    <div class="chat-hot">🔥32131人</div>
+    <div class="chat-hot">🔥{{ currentRegion.hot || 0 }}人</div>
 
     <a-modal v-model:visible="visible" title="大区选择">
       <div v-for="(item, index) in regions" :key="index" class="region-sw">

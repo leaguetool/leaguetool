@@ -7,7 +7,7 @@
     <!-- 消息体 -->
     <div>
       <!-- 消息头 -->
-      <div class="chat-message-header">
+      <div class="chat-message-header" v-show="!msg.isSelf">
         <div class="chat-message-header-name cursor-op" @click="copyName()">
           {{ msg.name }}
         </div>
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style>
-/* .chat-self {
+.chat-self {
   display: flex;
   flex-direction: row-reverse;
 }
@@ -77,9 +77,8 @@ export default {
 .chat-self .chat-message-avatar {
   margin-left: 10px;
 }
-.chat-self .chat-message-content{
-
-} */
+.chat-self .chat-message-content {
+}
 .chat-self .chat-message-content .chat-message-content-text {
   background-color: #40ff7091;
 }

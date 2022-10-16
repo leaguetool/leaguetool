@@ -70,7 +70,6 @@ export default {
         context.emit("changeStatus");
       },
       clickHead: () => {
-        console.log("clickHead");
         context.emit("clickHead");
       },
     };

@@ -9,14 +9,14 @@ let Handler = function () {
     // ws.send("hello 连上了哦");
     //document.getElementById('contentId').innerHTML += 'hello 连上了哦<br>';
     loading && loading() && (loading = null);
-    message.success({
-      content: "连接到开黑大厅成功",
-      key,
-      duration: 2,
-      style: {
-        marginTop: "30px",
-      },
-    });
+    // message.success({
+    //   content: "连接到开黑大厅成功",
+    //   key,
+    //   duration: 2,
+    //   style: {
+    //     marginTop: "30px",
+    //   },
+    // });
   };
 
   /**
@@ -43,6 +43,18 @@ let Handler = function () {
           case "SEND_TOKEN": {
             store.dispatch("user/setToken", msgBody.data.data);
             break;
+          }
+          case "AREA_HOT": {
+            store.dispatch("chat/changeRegionHot", msgBody.data.data);
+            break;
+          }
+          case "BASE_DATA": {
+            let baseInfo = JSON.parse(msgBody.data.data);
+            //处理基础信息
+            console.log("基础信息", baseInfo);
+            if (baseInfo.admins) {
+              store.dispatch("system/setAdminUser", baseInfo.admins);
+            }
           }
         }
         break;

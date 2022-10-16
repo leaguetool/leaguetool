@@ -32,7 +32,6 @@ export default {
   components: { Message, DynamicScroller, DynamicScrollerItem },
   setup: () => {
     const store = useStore();
-    store.dispatch("chat/init");
     const scrollToIndex = ref(0);
     const scroller = ref(null);
     const chatList = computed(() => {

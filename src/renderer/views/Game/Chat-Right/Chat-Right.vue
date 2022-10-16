@@ -77,26 +77,29 @@ export default {
     const notification = computed(() => {
       return store.state.system.notice;
     });
+    const adminUser = computed(() => {
+      return store.state.system.adminUser;
+    });
     const notificationModel = () => {
       Modal.warning({
         title: "公告",
         content: createVNode(Notice, { notification: notification.value }),
       });
     };
-    const adminUser = ref([
-      {
-        name: "理想三旬",
-        avatar:
-          "https://img2.baidu.com/it/u=1114729443,1120710416&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500",
-        online: true,
-      },
-      {
-        name: "风车车的猫尾饼",
-        avatar:
-          "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F75%2F84%2F5a34de267c8a6_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667622664&t=910490b881759efd58326d88c8c7444c",
-        online: false,
-      },
-    ]);
+    // const adminUser = ref([
+    //   {
+    //     name: "理想三旬",
+    //     avatar:
+    //       "https://img2.baidu.com/it/u=1114729443,1120710416&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500",
+    //     online: true,
+    //   },
+    //   {
+    //     name: "风车车的猫尾饼",
+    //     avatar:
+    //       "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F75%2F84%2F5a34de267c8a6_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667622664&t=910490b881759efd58326d88c8c7444c",
+    //     online: false,
+    //   },
+    // ]);
     //生成随机数据在chatUser里面 头像也随机生成
     const chatUser = ref([]);
     for (let i = 0; i < 8; i++) {
@@ -108,7 +111,10 @@ export default {
     }
 
     const chatUserModel = () => {
-      message.info("暂未开放");
+      message.info({
+        content: "暂未开放",
+        key: "clickRightUser",
+      });
     };
     return {
       notification,

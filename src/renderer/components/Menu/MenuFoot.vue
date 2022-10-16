@@ -7,22 +7,34 @@
     >
       <template #content>
         <div class="setting-list">
-          <div class="cursor-font">
-            <a-space :size="5">
-              <SettingFilled twoToneColor="#f9cc16" class="cursor-op" />
-              <div>设置</div>
+          <div v-show="!isLogin" class="cursor-font" @click="login()">
+            <a-space :size="8">
+              <LoginOutlined class="cursor-op" />
+              <div>立即登陆</div>
             </a-space>
           </div>
-          <div class="cursor-font">
-            <a-space :size="5">
+          <div class="cursor-font" @click="notCode()">
+            <a-space :size="8">
+              <SettingFilled twoToneColor="#f9cc16" class="cursor-op" />
+              <div>应用设置</div>
+            </a-space>
+          </div>
+          <div class="cursor-font" @click="notCode()">
+            <a-space :size="8">
               <ExclamationCircleFilled class="cursor-op" />
               <div>关于我们</div>
             </a-space>
           </div>
           <div class="cursor-font" @click="checkUpdate()">
-            <a-space :size="5">
+            <a-space :size="8">
               <DownloadOutlined class="cursor-op" />
               <div>检查更新</div>
+            </a-space>
+          </div>
+          <div v-show="isLogin" class="cursor-font" @click="logoutOut()">
+            <a-space :size="8">
+              <LogoutOutlined class="cursor-op" />
+              <div>退出登陆</div>
             </a-space>
           </div>
         </div>
@@ -42,11 +54,14 @@ import {
   SettingFilled,
   ExclamationCircleFilled,
   DownloadOutlined,
+  LogoutOutlined,
+  LoginOutlined,
 } from "@ant-design/icons-vue";
 import { ipcRenderer } from "electron";
-import { notification } from "ant-design-vue";
+import { message, notification } from "ant-design-vue";
 import { Modal } from "ant-design-vue";
-import { createVNode, ref } from "vue";
+import { computed, createVNode, ref } from "vue";
+import { useStore } from "vuex";
 import UpdateVNode from "./UpdateVNode";
 import { convertFileSize, convertDateFormat } from "@/common/converter";
 
@@ -56,10 +71,12 @@ export default {
     SettingFilled,
     ExclamationCircleFilled,
     DownloadOutlined,
+    LogoutOutlined,
+    LoginOutlined,
   },
   setup() {
     const footModel = ref(false);
-
+    const store = useStore();
     const checkUpdate = () => {
       footModel.value = false;
       ipcRenderer.invoke("checkUpdate").then((info) => {
@@ -75,6 +92,7 @@ export default {
             description: "您已经是最新的版本了~",
             placement: "bottomRight",
             duration: 3,
+            key: "lastVersionUpdateMessage",
             icon: () =>
               createVNode(DownloadOutlined, { style: "color: #f9cc16" }),
           });
@@ -122,7 +140,36 @@ export default {
       });
     };
 
-    return { footModel, checkUpdate };
+    const logoutOut = () => {
+      footModel.value = false;
+      store.dispatch("user/logout");
+      setTimeout(() => {
+        //断开连接后，连接一个浏览用户
+        store.dispatch("chat/init");
+      }, 500);
+      ipcRenderer.send("logoutOut");
+      message.success("退出成功");
+    };
+
+    const login = () => {
+      footModel.value = false;
+      ipcRenderer.invoke("loginLOL");
+    };
+
+    const isLogin = computed(() => {
+      return store.state.user.uid;
+    });
+
+    const notCode = () => {
+      footModel.value = false;
+      message.warning({
+        content: "暂未开放，敬请期待~",
+        duration: 2,
+        key: "notCode",
+      });
+    };
+
+    return { footModel, isLogin, login, notCode, checkUpdate, logoutOut };
   },
 };
 </script>

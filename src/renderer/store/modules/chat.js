@@ -73,6 +73,8 @@ export default {
     currentRegion: {
       name: "艾欧尼亚",
       id: 1,
+      //热度
+      hot: 0,
     },
   },
   mutations: {
@@ -84,15 +86,29 @@ export default {
       //切换大区后清空聊天记录
       // state.chatList = [];
     },
+    [types.CHAT_CHANGE_HOT](state, hot) {
+      state.currentRegion.hot = hot;
+    },
   },
   actions: {
     init({ rootState, state }) {
       //初始化成功后创建chat开黑大厅链接，导入chatjs
       console.log(rootState);
-      ChatJs.getInstance().init(
-        rootState.user.displayName,
+      let chatInstance = ChatJs.getInstance().init(
+        rootState.user.uid ? rootState.user.uid : "tourist",
         state.currentRegion.id
       );
+      const getBaseInfo = setInterval(() => {
+        if (chatInstance.tio.ws.status) {
+          //获取基础信息
+          chatInstance.sendOtherMsg({
+            otherPakType: "BASE_DATA",
+            data: {},
+          });
+          clearInterval(getBaseInfo);
+        }
+      }, 500);
+
       // new ChatJs().init(rootState);
     },
     //添加一条消息
@@ -119,6 +135,8 @@ export default {
       if (!region) {
         return;
       }
+      //hot默认为0
+      region.hot = 0;
       commit(types.CHAT_CHANGE_REGION, region);
       //切换大区后重新绑定到新大区的聊天组
       ChatJs.getInstance().sendOtherMsg({
@@ -126,6 +144,12 @@ export default {
         data: region.id,
       });
     },
+    //改变热度
+    changeRegionHot({ commit }, hot) {
+      commit(types.CHAT_CHANGE_HOT, hot);
+    },
+    //初始化基础信息
+    initBaseInfo() {},
   },
   getters: {
     getChatList: (state) => {

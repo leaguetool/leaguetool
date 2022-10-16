@@ -7,10 +7,14 @@ export default {
   state: {
     //公告
     notice: "",
+    adminUser: [],
   },
   mutations: {
     [types.SYSTEM_SET_NOTICE](state, notice) {
       state.notice = notice;
+    },
+    [types.SYSTEM_SET_ADMINUSER](state, adminUser) {
+      state.adminUser = adminUser;
     },
   },
   actions: {
@@ -22,6 +26,9 @@ export default {
           commit(types.SYSTEM_SET_NOTICE, data.data);
         });
       });
+    },
+    setAdminUser({ commit }, adminUser) {
+      commit(types.SYSTEM_SET_ADMINUSER, adminUser);
     },
   },
 };

@@ -18,10 +18,12 @@
 <script>
 import { ipcRenderer } from "electron";
 import { useRouter, useRoute } from "vue-router";
-import { reactive, watch, ref } from "vue";
+import { reactive, watch, ref, computed } from "vue";
 import ProFileImg from "../ProFileImg.vue";
 import MenuItem from "./MenuItem.vue";
 import MenuFoot from "./MenuFoot.vue";
+import { useStore } from "vuex";
+
 export default {
   components: {
     ProFileImg,
@@ -63,6 +65,7 @@ export default {
       //   selectIcon: "PlusSquareFilled",
       // },
     ]);
+    const store = useStore();
     const router = useRouter();
     const route = useRoute();
     let gotoPath = (path) => {
@@ -74,8 +77,14 @@ export default {
     };
     const clickHead = () => {
       // gotoPath("/home/pro-file");
-      ipcRenderer.invoke("loginLOL");
+      //没登陆才能去
+      if (!isLogin.value) {
+        ipcRenderer.invoke("loginLOL");
+      }
     };
+    const isLogin = computed(() => {
+      return store.state.user.uid;
+    });
 
     let current = ref(route.path || menus[0].path);
     watch(
@@ -85,7 +94,7 @@ export default {
       }
     );
 
-    return { menus, current, changeStatus, clickHead, gotoPath };
+    return { menus, current, isLogin, changeStatus, clickHead, gotoPath };
   },
 };
 </script>
