@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import { ipcRenderer } from "electron";
 import { useRouter, useRoute } from "vue-router";
 import { reactive, watch, ref } from "vue";
 import ProFileImg from "../ProFileImg.vue";
@@ -72,7 +73,8 @@ export default {
       console.log("我要改变状态");
     };
     const clickHead = () => {
-      gotoPath("/home/pro-file");
+      // gotoPath("/home/pro-file");
+      ipcRenderer.invoke("loginLOL");
     };
 
     let current = ref(route.path || menus[0].path);

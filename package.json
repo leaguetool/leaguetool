@@ -1,6 +1,6 @@
 {
   "name": "leaguetool",
-  "version": "0.4.0",
+  "version": "0.4.3",
   "productName": "LeagueTool",
   "author": {
     "name": "Lemon",
@@ -43,7 +43,7 @@
     "ali-oss": "^6.16.0",
     "copy-webpack-plugin": "^5.0.0",
     "cross-env": "^7.0.3",
-    "electron": "^13.2.2",
+    "electron": "^21.1.1",
     "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",

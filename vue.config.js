@@ -53,6 +53,7 @@ module.exports = {
           output: `./dist_electron/release/${pkg.version}`, // 输出文件路径
         },
       },
+      preload: "public/preload.js",
     },
   },
   chainWebpack: (config) => {
@@ -67,6 +68,10 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new CopyPlugin([
+        {
+          from: path.resolve(__dirname, "dist_electron/output/plugins"),
+          to: path.resolve(__dirname, "dist_electron/output/bundled/plugins"),
+        },
         {
           from: path.resolve(__dirname, "dist_electron/output/plugins"),
           to: path.resolve(__dirname, "dist_electron/output/bundled/plugins"),

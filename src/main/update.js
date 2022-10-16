@@ -32,11 +32,7 @@ export const checkForUpdates = (startApp) => {
       autoUpdater.checkForUpdates();
     } else {
       //开发环境不检测更新，直接跳过。
-      if (startApp) {
-        resolve({ logs: ["1、支持应用内升级版本"], version: "0.3.6" });
-      } else {
-        resolve();
-      }
+      resolve();
     }
 
     let message = {

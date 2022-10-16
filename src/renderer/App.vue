@@ -20,7 +20,9 @@
 import mitt from "@/common/mitt";
 import { ipcRenderer } from "electron";
 import { useRouter, useRoute } from "vue-router";
+import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
+import { message } from "ant-design-vue";
 import Nav from "./components/Nav/Nav.vue";
 import BackGround from "./components/BackGround.vue";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
@@ -39,6 +41,7 @@ export default {
     let isShow = ref(true);
     // 获取路由器实例
     const router = useRouter();
+    const store = useStore();
     // route是响应式对象,可监控器变化
     const route = useRoute();
     ipcRenderer.on("game-kill", () => {
@@ -68,6 +71,13 @@ export default {
       setTimeout(() => {
         ipcRenderer.send("stop-loading-main");
       }, 1000);
+    });
+
+    ipcRenderer.on("loginSuccess", function (event, data) {
+      console.log("接受到通知了");
+      store.dispatch("user/setUser", data[0]);
+      message.success("登陆成功", 2);
+      console.log(data[0]); // prints "pong"
     });
 
     return {

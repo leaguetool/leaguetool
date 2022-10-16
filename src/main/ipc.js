@@ -1,8 +1,10 @@
-const { app, ipcMain, dialog } = require("electron");
+const { app, ipcMain, dialog, BrowserWindow } = require("electron");
 const { startScanning } = require("./file/lockfile");
 const { openBugreport, openGithub } = require("./conf/config");
 const { checkForUpdates, downloadUpdate } = require("./update");
 const { createUpdateWindow } = require("./window/update");
+const { LoginLoL, hideLogin } = require("./window/lolLogin");
+
 const {
   send: sendMainWindow,
   getMainWindow,
@@ -75,4 +77,20 @@ ipcMain.on("updateApp", () => {
 // TODO: 手动下载更新文件
 ipcMain.handle("confirm-downloadUpdate", () => {
   downloadUpdate();
+});
+
+// 登陆LOL
+ipcMain.handle("loginLOL", () => {
+  LoginLoL();
+});
+
+ipcMain.on("proFileData", (event, args) => {
+  hideLogin(event, args);
+  //存入store 主进程无法直接放vuex 所以可以通知给渲染进程
+  sendMainWindow("loginSuccess", args);
+});
+
+//打印
+ipcMain.on("console", (event, args) => {
+  console.log(args);
 });

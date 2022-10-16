@@ -14,13 +14,13 @@ export default {
   namespaced: true,
   state: {
     //头像
-    displayName: "风车车的猫尾饼",
+    displayName: "请登陆",
     profileIconId: 29,
     summonerId: 0,
     summonerLevel: 0,
     xpSinceLastLevel: 0,
     xpUntilNextLevel: 0,
-    avatar: "https://joeschmoe.io/api/v1/random",
+    avatar: "https://game.gtimg.cn/images/lol/act/img/profileicon/29.png",
     onlineStatus: "",
     onlineStatusEnum,
     uid: "",
@@ -59,6 +59,10 @@ export default {
     //设置用户TOKEN
     setToken({ commit }, token) {
       commit(types.USER_SET_TOKEN, token);
+    },
+    //设置用户
+    setUser({ commit }, userInfo) {
+      commit(types.USER_CURRENT_SUMMONER, userInfo);
     },
   },
   getters: {

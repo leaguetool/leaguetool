@@ -59,6 +59,11 @@ export default {
         message.warning("内容不能为空哦！", 1, null);
         return;
       }
+      //登陆检测
+      if (!store.state.user.uid) {
+        message.warning("请登陆后在发言", 1, null);
+        return;
+      }
 
       store
         .dispatch("chat/sendMessage", {
@@ -69,7 +74,7 @@ export default {
           time: new Date().getTime(),
           type: "text",
           region: store.state.chat.currentRegion,
-          rank: "最强王者",
+          rank: store.state.user.rank,
           isSelf: true,
         })
         .then(() => {
