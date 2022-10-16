@@ -60,7 +60,7 @@ export default {
     });
 
     const selectRegion = (region) => {
-      store.dispatch("chat/changeRegion", region).then(() => {
+      store.dispatch("chat/changeRegion", region.id).then(() => {
         message.success("切换成功", 1, null);
         visible.value = false;
       });

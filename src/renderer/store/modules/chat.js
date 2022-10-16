@@ -106,7 +106,19 @@ export default {
       // commit(types.CHAT_ADD_MESSAGE, message);
     },
     //切换大区
-    changeRegion({ commit }, region) {
+    changeRegion({ commit, state }, regionId) {
+      //根据regionId循环找到state.regions下面对应的大区对象
+      let region = {};
+      state.regions.forEach((item) => {
+        item.list.forEach((item2) => {
+          if (item2.id == regionId) {
+            region = item2;
+          }
+        });
+      });
+      if (!region) {
+        return;
+      }
       commit(types.CHAT_CHANGE_REGION, region);
       //切换大区后重新绑定到新大区的聊天组
       ChatJs.getInstance().sendOtherMsg({
