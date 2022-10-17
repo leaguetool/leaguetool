@@ -40,7 +40,7 @@ export default {
   position: relative;
   /* display: flex; */
   /* justify-items: left; */
-  padding: 0px 0px 0px 30px;
+  padding: 0px 0px 0px 20px;
   height: calc(100vh - 30px);
 }
 .game-left {

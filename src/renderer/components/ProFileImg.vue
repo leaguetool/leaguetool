@@ -1,5 +1,5 @@
 <template>
-  <a-tooltip placement="bottom" arrowPointAtCenter color="white">
+  <a-tooltip placement="bottom" arrowPointAtCenter>
     <template #title>
       <div class="tooltip">
         <div>当前等级：{{ user.summonerLevel }}</div>
@@ -78,11 +78,9 @@ export default {
 </script>
 <style>
 .head-img {
-  background-color: #fff;
   cursor: pointer;
   margin: 0px !important;
 }
 .tooltip {
-  color: black;
 }
 </style>

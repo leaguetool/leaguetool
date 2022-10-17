@@ -67,6 +67,7 @@ export default {
 .chat-self {
   display: flex;
   flex-direction: row-reverse;
+  padding-right: 20px !important;
 }
 
 .chat-self .chat-message-header {

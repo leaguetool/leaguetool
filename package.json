@@ -1,6 +1,6 @@
 {
   "name": "leaguetool",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "productName": "LeagueTool",
   "author": {
     "name": "Lemon",
@@ -66,7 +66,8 @@
     "rules": {
       "vue/valid-v-model": "off",
       "no-unused-vars": "off",
-      "no-empty-pattern": "off"
+      "no-empty-pattern": "off",
+      "vue/no-unused-components": "off"
     }
   },
   "browserslist": [

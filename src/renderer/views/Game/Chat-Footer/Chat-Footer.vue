@@ -25,13 +25,13 @@
         :bordered="false"
         @pressEnter="handleEnter"
         :auto-size="{ minRows: 1, maxRows: 2 }"
-        placeholder="文明发言，友好交友  Ctrl + Enter 换行"
+        placeholder="文明发言，友好交友"
         enter-button="发送"
         size="large"
       />
     </div>
     <div class="chat-footer-send">
-      <a-button type="primary" @click="sendMessage()">
+      <a-button type="primary" ghost block @click="sendMessage()">
         <template #icon><SendOutlined /></template>
         发送
       </a-button>
@@ -125,7 +125,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .chat-footer-container {
   width: 100%;
   height: 70px;
@@ -156,6 +156,10 @@ export default {
   color: #fff;
 }
 .chat-footer-send {
-  padding: 10px;
+  padding: 0px 20px;
+}
+.chat-footer-send .ant-btn-primary {
+  border-color: #ffffff00;
+  background: #ffffff00;
 }
 </style>
