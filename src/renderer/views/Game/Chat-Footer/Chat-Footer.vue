@@ -56,12 +56,20 @@ export default {
     let sendMessage = (word) => {
       //判断messageText, word不能为空并且用ant弹出提示
       if (!word && messageText.value === "") {
-        message.warning("内容不能为空哦！", 1, null);
+        message.warning({
+          content: "消息不能为空",
+          duration: 1,
+          key: "messageBody",
+        });
         return;
       }
       //登陆检测
       if (!store.state.user.uid) {
-        message.warning("请登陆后在发言", 1, null);
+        message.warning({
+          content: "请登陆后在发言",
+          duration: 1,
+          key: "messageBody",
+        });
         return;
       }
 
@@ -90,7 +98,11 @@ export default {
 
     //TODO 表情待开发
     const emoji = () => {
-      message.warning("开发中...", 1, null);
+      message.warning({
+        content: "暂未开放，敬请期待~",
+        duration: 1,
+        key: "emojiMessage",
+      });
       return;
     };
 
