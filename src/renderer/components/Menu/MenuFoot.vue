@@ -182,12 +182,12 @@ export default {
   padding: 0px 0px;
   width: 120px;
   color: #fff;
-  background-color: #101010;
   box-shadow: 0px 0px 3px #6b6b6b;
 }
 .setting-list {
   text-align: left;
   line-height: 40px;
+  width: 120px;
 }
 .setting-list .cursor-font {
   font-size: 14px;

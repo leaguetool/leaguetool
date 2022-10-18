@@ -1,7 +1,12 @@
 <template>
   <div class="chat-footer-container">
-    <div class="chat-footer-emoji cursor-op" @click="emoji()">
-      <smile-outlined />
+    <div class="chat-footer-emoji cursor-op" @click="emojiModel = true">
+      <a-popover trigger="click" v-model:visible="emojiModel">
+        <template #content>
+          <Emoji @emojiSend="emojiSend" />
+        </template>
+        <smile-outlined />
+      </a-popover>
     </div>
     <div class="chat-footer-hotword cursor-op">
       <a-dropdown :trigger="['click']" placement="top">
@@ -24,6 +29,7 @@
         v-model:value="messageText"
         :bordered="false"
         @pressEnter="handleEnter"
+        @blur="campaignNameBlur"
         :auto-size="{ minRows: 1, maxRows: 2 }"
         placeholder="文明发言，友好交友"
         enter-button="发送"
@@ -34,7 +40,6 @@
       <a-button
         type="primary"
         :disabled="sendBlock"
-        ghost
         block
         @click="sendMessage()"
       >
@@ -50,11 +55,14 @@ import { SmileOutlined, SendOutlined } from "@ant-design/icons-vue";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 import { message } from "ant-design-vue";
+import Emoji from "../Chat/Emoji/Emoji.vue";
 
 export default {
-  components: { SmileOutlined, SendOutlined },
+  components: { SmileOutlined, SendOutlined, Emoji },
   setup: () => {
     const messageText = ref("");
+    const campaignNameIndex = ref("");
+    const emojiModel = ref(false);
     const sendBlockSecond = ref(5);
     const sendBlock = ref(false);
     const store = useStore();
@@ -63,12 +71,27 @@ export default {
     });
 
     const sendText = computed(() => {
-      return sendBlock.value ? sendBlockSecond.value + "s" : "发送";
+      return sendBlock.value ? sendBlockSecond.value + "s后" : "发送";
     });
 
     let sendMessage = (word) => {
+      //频率限制
+      if (sendBlock.value) {
+        message.warning({
+          content: "请等待禁用时间结束后再发言",
+          duration: 1,
+          key: "messageBody",
+        });
+        return;
+      }
+
       //判断messageText, word不能为空并且用ant弹出提示
-      if (!word && messageText.value === "") {
+      //检测是否为空或者空格或者换行
+      let text = word || messageText.value;
+      if (
+        (!text && text.trim() === "") ||
+        text.trim().replaceAll("\n", "") === ""
+      ) {
         message.warning({
           content: "消息不能为空",
           duration: 1,
@@ -76,6 +99,7 @@ export default {
         });
         return;
       }
+
       //登陆检测
       if (!store.state.user.uid) {
         message.warning({
@@ -143,28 +167,50 @@ export default {
       }
     };
 
+    const campaignNameBlur = (e) => {
+      campaignNameIndex.value = e.srcElement.selectionStart;
+    };
+
+    /**  **/
+    const campaignFormatChar = (val) => {
+      if (messageText.value) {
+        let index = campaignNameIndex.value;
+        let text = messageText.value;
+        //this.form.campaignName = this.form.campaignName + val;
+        messageText.value = text.slice(0, index) + val + text.slice(index);
+      } else {
+        messageText.value = val;
+      }
+    };
+
     return {
       messageText,
       displayName,
       sendBlock,
       sendBlockSecond,
       sendText,
+      emojiModel,
       sendMessage,
       emoji,
       hotWordSend,
       handleEnter,
+      campaignNameBlur,
       hotWord: [
         "大乱斗快来人加我",
         "求大腿有麦会躺",
         "有妹妹来大佬能C的",
         "灵活4=1，来人秒开",
       ],
+      emojiSend: (emoji) => {
+        campaignFormatChar(emoji.emoji);
+        emojiModel.value = false;
+      },
     };
   },
 };
 </script>
 
-<style scoped>
+<style>
 .chat-footer-container {
   width: 100%;
   height: 70px;
@@ -200,5 +246,16 @@ export default {
 .chat-footer-send .ant-btn-primary {
   border-color: #ffffff00;
   background: #ffffff00;
+}
+.chat-footer-send .ant-btn-primary:hover {
+  border-color: #ffffff00;
+  background: #ffffff00;
+}
+.chat-footer-send .ant-btn-primary:focus {
+  border-color: #ffffff00;
+  background: #ffffff00;
+}
+.ant-popover .ant-popover-inner-content {
+  width: 100%;
 }
 </style>
