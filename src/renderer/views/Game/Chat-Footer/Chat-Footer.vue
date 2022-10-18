@@ -31,9 +31,15 @@
       />
     </div>
     <div class="chat-footer-send">
-      <a-button type="primary" ghost block @click="sendMessage()">
+      <a-button
+        type="primary"
+        :disabled="sendBlock"
+        ghost
+        block
+        @click="sendMessage()"
+      >
         <template #icon><SendOutlined /></template>
-        发送
+        {{ sendText }}
       </a-button>
     </div>
   </div>
@@ -49,10 +55,17 @@ export default {
   components: { SmileOutlined, SendOutlined },
   setup: () => {
     const messageText = ref("");
+    const sendBlockSecond = ref(5);
+    const sendBlock = ref(false);
     const store = useStore();
     const displayName = computed(() => {
       return store.state.user.displayName;
     });
+
+    const sendText = computed(() => {
+      return sendBlock.value ? sendBlockSecond.value + "s" : "发送";
+    });
+
     let sendMessage = (word) => {
       //判断messageText, word不能为空并且用ant弹出提示
       if (!word && messageText.value === "") {
@@ -88,6 +101,17 @@ export default {
         .then(() => {
           //发送成功后，清空输入框，禁用一段时间
           messageText.value = "";
+          //开启禁用
+          sendBlock.value = true;
+          //让一个按钮发送消息后,禁用5秒钟倒计时
+          let timer = setInterval(() => {
+            sendBlockSecond.value--;
+            if (sendBlockSecond.value < 0) {
+              sendBlock.value = false;
+              sendBlockSecond.value = 5;
+              clearInterval(timer);
+            }
+          }, 1000);
         });
     };
 
@@ -122,6 +146,9 @@ export default {
     return {
       messageText,
       displayName,
+      sendBlock,
+      sendBlockSecond,
+      sendText,
       sendMessage,
       emoji,
       hotWordSend,
