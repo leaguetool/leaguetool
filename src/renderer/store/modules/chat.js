@@ -1,5 +1,6 @@
 import * as types from "../mutation-types";
 import ChatJs from "@/common/chat/chat.js";
+import chatApi from "@/api/chat";
 
 export default {
   namespaced: true,
@@ -76,6 +77,9 @@ export default {
       //热度
       hot: 0,
     },
+    emoji: {
+      emojis: [],
+    },
   },
   mutations: {
     [types.CHAT_ADD_MESSAGE](state, message) {
@@ -88,6 +92,9 @@ export default {
     },
     [types.CHAT_CHANGE_HOT](state, hot) {
       state.currentRegion.hot = hot;
+    },
+    [types.CHAT_EMOJI_EMOJIS](state, data) {
+      state.emoji.emojis = data;
     },
   },
   actions: {
@@ -150,6 +157,14 @@ export default {
     },
     //初始化基础信息
     initBaseInfo() {},
+    //获取emoji表情
+    getEmoji({ commit }) {
+      return new Promise(() => {
+        chatApi.getEmoji().then((data) => {
+          commit(types.CHAT_EMOJI_EMOJIS, data);
+        });
+      });
+    },
   },
   getters: {
     getChatList: (state) => {
