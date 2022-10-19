@@ -6,20 +6,20 @@ export default {
   namespaced: true,
   state: {
     chatList: [
-      {
-        id: 1,
-        name: "召唤师1",
-        avatar: `https://img2.baidu.com/it/u=1114729443,1120710416&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500`,
-        content: "test",
-        time: "2021-01-01 12:00:00",
-        type: "text",
-        region: {
-          name: "祖安",
-          id: 2,
-        },
-        rank: "最强王者",
-        isSelf: false,
-      },
+      // {
+      //   id: 1,
+      //   name: "召唤师1",
+      //   avatar: `https://img2.baidu.com/it/u=1114729443,1120710416&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500`,
+      //   content: "test",
+      //   time: "2021-01-01 12:00:00",
+      //   type: "text",
+      //   region: {
+      //     name: "祖安",
+      //     id: 2,
+      //   },
+      //   rank: "最强王者",
+      //   isSelf: false,
+      // },
     ],
     //获取英雄联盟所有电信大区名字
     regions: [

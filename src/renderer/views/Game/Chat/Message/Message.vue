@@ -1,28 +1,31 @@
 <template>
-  <div class="chat-message chat-item" :class="{ 'chat-self': msg.isSelf }">
-    <!-- 头像 -->
-    <div class="chat-message-avatar">
-      <a-avatar :size="54" :src="msg.avatar" />
-    </div>
-    <!-- 消息体 -->
-    <div>
-      <!-- 消息头 -->
-      <div class="chat-message-header" v-show="!msg.isSelf">
-        <div class="chat-message-header-name cursor-op" @click="copyName()">
-          {{ msg.name }}
-        </div>
-        <div class="chat-message-header-region">
-          <a-tag color="cyan">{{ msg.region.name }}</a-tag>
-        </div>
-        <div class="chat-message-header-rank">
-          <a-tag color="blue">{{ msg.rank }}</a-tag>
-        </div>
+  <div>
+    <!-- 消息中间的时间 -->
+    <slot name="time" />
+    <div class="chat-message chat-item" :class="{ 'chat-self': msg.isSelf }">
+      <!-- 头像 -->
+      <div class="chat-message-avatar">
+        <a-avatar :size="54" :src="msg.avatar" />
       </div>
-      <!-- 消息内容 -->
-      <div class="chat-message-content">
-        <div class="chat-message-content-text">
-          {{ msg.content }}
-          <!-- <a-image
+      <!-- 消息体 -->
+      <div>
+        <!-- 消息头 -->
+        <div class="chat-message-header" v-show="!msg.isSelf">
+          <div class="chat-message-header-name cursor-op" @click="copyName()">
+            {{ msg.name }}
+          </div>
+          <div class="chat-message-header-region">
+            <a-tag color="cyan">{{ msg.region.name }}</a-tag>
+          </div>
+          <div class="chat-message-header-rank">
+            <a-tag color="blue">{{ msg.rank }}</a-tag>
+          </div>
+        </div>
+        <!-- 消息内容 -->
+        <div class="chat-message-content">
+          <div class="chat-message-content-text">
+            {{ msg.content }}
+            <!-- <a-image
             :width="200"
             :src="`https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?${random}`"
           >
@@ -37,6 +40,7 @@
           <a-button type="primary" @click="random = Date.now()"
             >reload</a-button
           > -->
+          </div>
         </div>
       </div>
     </div>
