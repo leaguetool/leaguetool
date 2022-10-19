@@ -1,13 +1,23 @@
 <template>
   <div class="chat-header">
-    <div class="chat-title">
+    <a-page-header
+      style="padding: 0px"
+      title="开黑大厅"
+      :sub-title="'🔥' + (currentRegion.hot || 0)"
+      @back="() => null"
+    >
+      <template #tags>
+        <a-tag color="orange">祖安</a-tag>
+      </template>
+    </a-page-header>
+    <!-- <div class="chat-title">
       开黑大厅<span class="chat-hot">🔥{{ currentRegion.hot || 0 }}</span>
-    </div>
+    </div> -->
 
     <div style="">
-      <div class="chat-region cursor-op" @click="changeRegion()">
+      <!-- <div class="chat-region cursor-op" @click="changeRegion()">
         {{ currentRegion.name }} <SwapOutlined />
-      </div>
+      </div> -->
 
       <a-modal v-model:visible="visible" title="大区选择">
         <div v-for="(item, index) in regions" :key="index" class="region-sw">

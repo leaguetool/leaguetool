@@ -112,8 +112,8 @@ export default {
 
 <style>
 .chat-body {
-  height: calc(100vh - 146px);
-  padding-top: 10px;
+  height: calc(100vh - 140px);
+  /* padding-top: 10px; */
   /* overflow: auto; */
   /* padding-right: 10px; */
 }
@@ -128,6 +128,6 @@ export default {
   border-radius: 10px;
 }
 .scroller {
-  height: calc(100vh - 146px);
+  height: calc(100vh - 140px);
 }
 </style>

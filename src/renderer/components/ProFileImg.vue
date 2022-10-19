@@ -9,7 +9,14 @@
       </div>
     </template>
 
-    <a-badge :offset="[-5, 50]" @click="changeStatus">
+    <a-avatar
+      @click.stop="clickHead"
+      :size="60"
+      :src="user.avatar"
+      :title="user.displayName"
+      class="head-img"
+    />
+    <!-- <a-badge :offset="[-5, 50]" @click="changeStatus">
       <template #count>
         <CheckCircleFilled
           v-if="user.onlineStatus === 'chat'"
@@ -38,7 +45,7 @@
         :title="user.displayName"
         class="head-img"
       />
-    </a-badge>
+    </a-badge> -->
   </a-tooltip>
 </template>
 <script>

@@ -1,11 +1,12 @@
 <template>
   <div class="card-container">
     <a-tabs v-model:activeKey="activeKey" tab-position="bottom" type="card">
-      <a-tab-pane
-        v-for="(emoji, index) in emojis"
-        :key="index"
-        :tab="emoji.title"
-      >
+      <a-tab-pane v-for="(emoji, index) in emojis" :key="index">
+        <template #tab>
+          <svg class="icon" aria-hidden="true">
+            <use :xlink:href="emoji.title"></use>
+          </svg>
+        </template>
         <div class="all-emoji">全部表情</div>
         <div class="emoji-list">
           <div
@@ -14,7 +15,10 @@
             class="emoji-item cursor-op"
             @click="emojiSend(item)"
           >
-            {{ item.emoji }}
+            <!-- <i class="iconfont">&#xe719;</i> -->
+            <svg class="icon" aria-hidden="true">
+              <use :xlink:href="item.emoji"></use>
+            </svg>
           </div>
         </div>
       </a-tab-pane>
@@ -43,6 +47,21 @@ export default defineComponent({
 });
 </script>
 <style>
+/* .iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+} */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 .card-container {
   width: 405px;
   height: 318px;
@@ -72,12 +91,24 @@ export default defineComponent({
   flex-wrap: wrap;
 }
 .emoji-list .emoji-item {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 22px;
+  padding: 0px;
+  margin: 6px;
+}
+.ant-tabs-nav-list .icon {
+  font-size: 20px;
+}
+.emoji-list .emoji-item .icon {
+  color: #333;
+  font-size: 40px;
+  -webkit-transition: font-size 0.25s linear, width 0.25s linear;
+  -moz-transition: font-size 0.25s linear, width 0.25s linear;
+  transition: font-size 0.25s linear, width 0.25s linear;
 }
 .all-emoji {
   padding: 5px 0px 0px 10px;
