@@ -3,11 +3,17 @@
     <a-page-header
       style="padding: 0px"
       title="开黑大厅"
+      :backIcon="false"
+      :avatar="{
+        src: './static/icon/icon.png',
+      }"
       :sub-title="'🔥' + (currentRegion.hot || 0)"
       @back="() => null"
     >
       <template #tags>
-        <a-tag color="orange">祖安</a-tag>
+        <a-tag style="cursor: pointer" color="orange" @click="changeRegion()">
+          {{ currentRegion.name }}</a-tag
+        >
       </template>
     </a-page-header>
     <!-- <div class="chat-title">

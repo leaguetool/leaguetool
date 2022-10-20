@@ -102,6 +102,7 @@ export default defineComponent({
 }
 .ant-tabs-nav-list .icon {
   font-size: 20px;
+  color: #333;
 }
 .emoji-list .emoji-item .icon {
   color: #333;

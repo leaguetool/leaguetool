@@ -182,6 +182,7 @@ export default {
           messageText.value = text + val;
         } else {
           messageText.value = text.slice(0, index) + val + text.slice(index);
+          campaignNameIndex.value = (text.slice(0, index) + val).length;
         }
       } else {
         messageText.value = val;

@@ -72,6 +72,7 @@ export default {
 }
 .chat-self .chat-message-content .chat-message-content-text {
   background-color: #40ff7091;
+  border-radius: 5px 5px 0px 5px;
 }
 .chat-message {
   display: flex;
@@ -112,6 +113,8 @@ export default {
   word-break: break-all;
   letter-spacing: 1px;
   white-space: pre-wrap;
+  display: flex;
+  align-items: center;
 
   -webkit-user-select: text;
   -khtml-user-select: text;
@@ -123,5 +126,9 @@ export default {
 
 .chat-message-content .chat-message-content-text .icon {
   color: #333;
+  font-size: 20px;
+}
+.chat-message-content .chat-message-content-text .icon + .icon {
+  margin-left: 2px;
 }
 </style>

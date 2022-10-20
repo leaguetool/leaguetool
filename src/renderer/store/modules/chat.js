@@ -217,7 +217,7 @@ export default {
     getEmoji({ commit }) {
       return new Promise(() => {
         chatApi.getEmoji().then((data) => {
-          commit(types.CHAT_EMOJI_EMOJIS, data);
+          commit(types.CHAT_EMOJI_EMOJIS, data.data);
         });
       });
     },

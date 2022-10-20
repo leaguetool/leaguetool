@@ -128,6 +128,6 @@ export default {
   border-radius: 10px;
 }
 .scroller {
-  height: calc(100vh - 140px);
+  height: calc(100vh - 146px);
 }
 </style>
