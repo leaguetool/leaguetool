@@ -177,7 +177,12 @@ export default {
         let index = campaignNameIndex.value;
         let text = messageText.value;
         //this.form.campaignName = this.form.campaignName + val;
-        messageText.value = text.slice(0, index) + val + text.slice(index);
+        //有这种情况，用户没有光标,直接就选择表情包,那么这时候index就是0所以就需要单独处理
+        if (index == 0) {
+          messageText.value = text + val;
+        } else {
+          messageText.value = text.slice(0, index) + val + text.slice(index);
+        }
       } else {
         messageText.value = val;
       }
@@ -202,7 +207,7 @@ export default {
         "灵活4=1，来人秒开",
       ],
       emojiSend: (emoji) => {
-        campaignFormatChar(emoji.emoji);
+        campaignFormatChar(`[${emoji.text}]`);
         emojiModel.value = false;
       },
     };

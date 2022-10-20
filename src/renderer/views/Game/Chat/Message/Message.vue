@@ -23,24 +23,10 @@
         </div>
         <!-- 消息内容 -->
         <div class="chat-message-content">
-          <div class="chat-message-content-text">
-            {{ msg.content }}
-            <!-- <a-image
-            :width="200"
-            :src="`https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?${random}`"
-          >
-            <template #placeholder>
-              <a-image
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200"
-                :width="200"
-                :preview="false"
-              />
-            </template>
-          </a-image>
-          <a-button type="primary" @click="random = Date.now()"
-            >reload</a-button
-          > -->
-          </div>
+          <div
+            class="chat-message-content-text"
+            v-dompurify-html:svgandimg="msg.content"
+          ></div>
         </div>
       </div>
     </div>
@@ -133,5 +119,9 @@ export default {
   -ms-user-select: text;
   user-select: text;
   /* min-height: 80px; */
+}
+
+.chat-message-content .chat-message-content-text .icon {
+  color: #333;
 }
 </style>

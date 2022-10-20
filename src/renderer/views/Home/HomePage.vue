@@ -15,7 +15,7 @@ export default {
     const store = useStore();
     // store.dispatch("user/initSummoner");
     store.dispatch("system/getNotice");
-    store.dispatch("chat/getEmoji");
+    // store.dispatch("chat/getEmoji");
     return {};
   },
 };
