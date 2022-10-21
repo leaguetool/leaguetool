@@ -70,6 +70,10 @@ export default {
       return store.state.user.displayName;
     });
 
+    const hotWords = computed(() => {
+      return store.state.chat.hotWords;
+    });
+
     const sendText = computed(() => {
       return sendBlock.value ? sendBlockSecond.value + "s后" : "发送";
     });
@@ -201,7 +205,7 @@ export default {
       hotWordSend,
       handleEnter,
       campaignNameBlur,
-      hotWord: [
+      hotWord: hotWords || [
         "大乱斗快来人加我",
         "求大腿有麦会躺",
         "有妹妹来大佬能C的",

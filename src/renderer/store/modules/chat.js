@@ -136,6 +136,12 @@ export default {
         },
       ],
     },
+    hotWords: [
+      "大乱斗快来人加我",
+      "求大腿有麦会躺",
+      "有妹妹来大佬能C的",
+      "灵活4=1，来人秒开",
+    ],
   },
   mutations: {
     [types.CHAT_ADD_MESSAGE](state, message) {
@@ -151,6 +157,9 @@ export default {
     },
     [types.CHAT_EMOJI_EMOJIS](state, data) {
       state.emoji.emojis = data;
+    },
+    [types.SET_HOTWORDS](state, hotWords) {
+      state.hotWords = hotWords;
     },
   },
   actions: {
@@ -220,6 +229,9 @@ export default {
           commit(types.CHAT_EMOJI_EMOJIS, data.data);
         });
       });
+    },
+    setHotWords({ commit }, hotWords) {
+      commit(types.SET_HOTWORDS, hotWords);
     },
   },
   getters: {

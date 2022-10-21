@@ -19,6 +19,8 @@ export const CHAT_CHANGE_REGION = "CHAT_CHANGE_REGION";
 export const CHAT_CHANGE_HOT = "CHAT_CHANGE_HOT";
 //添加emojis
 export const CHAT_EMOJI_EMOJIS = "CHAT_EMOJI_EMOJIS";
+//设置热词
+export const SET_HOTWORDS = "SET_HOTWORDS";
 
 //system
 //设置系统公告

@@ -18,8 +18,17 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <script src="http://static.s6.design/update/emoji/iconfont.js"></script>
+  <!-- <script src="http://static.s6.design/update/emoji/iconfont.js"></script> -->
   <script>
+    (function () {
+      var el = document.createElement("script");
+      el.src =
+        "http://static.s6.design/update/emoji/iconfont.js?_t=" +
+        new Date().getTime();
+      el.id = "emoji-script";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(el, s);
+    })(window);
     function isElectron() {
       // Renderer process
       if (

@@ -52,6 +52,10 @@ let Handler = function () {
             if (baseInfo.admins) {
               store.dispatch("system/setAdminUser", baseInfo.admins);
             }
+
+            if (baseInfo.hotWords) {
+              store.dispatch("chat/setHotWords", baseInfo.hotWords);
+            }
           }
         }
         break;
