@@ -21,6 +21,8 @@ export const CHAT_CHANGE_HOT = "CHAT_CHANGE_HOT";
 export const CHAT_EMOJI_EMOJIS = "CHAT_EMOJI_EMOJIS";
 //设置热词
 export const SET_HOTWORDS = "SET_HOTWORDS";
+//设置连接状态
+export const CHAT_CHANGE_CONNECT_STATUS = "CHAT_CHANGE_CONNECT_STATUS";
 
 //system
 //设置系统公告

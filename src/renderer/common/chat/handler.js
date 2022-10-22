@@ -5,7 +5,9 @@ import { message } from "ant-design-vue";
 const key = "chatConnect";
 let Handler = function () {
   this.onopen = function (event, ws) {
-    message.destroy();
+    // message.destroy();
+    //设置已连上状态
+    store.dispatch("chat/changeConnectStatus", true);
     // message.success({
     //   content: "连接到开黑大厅成功",
     //   key,
@@ -71,17 +73,19 @@ let Handler = function () {
     // error(e, ws)
     // message.error("连接到开黑大厅服务器失败，重试中...", 1, null);\
     console.log("连接ws失败~");
+    //设置未连上状态
+    store.dispatch("chat/changeConnectStatus", false);
     // if (loading) {
     //   return;
     // }
-    message.loading({
-      content: "连接到开黑大厅服务器失败，重试中...",
-      key,
-      style: {
-        marginTop: "30px",
-      },
-      duration: 0,
-    });
+    // message.loading({
+    //   content: "连接到开黑大厅服务器失败，重试中...",
+    //   key,
+    //   style: {
+    //     marginTop: "30px",
+    //   },
+    //   duration: 0,
+    // });
   };
 
   /**

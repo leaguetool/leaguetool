@@ -14,6 +14,9 @@
           <div class="chat-message-header-name cursor-op" @click="copyName()">
             {{ msg.name }}
           </div>
+          <div v-show="msg.region.name" class="chat-message-header-woman">
+            <a-tag color="pink">妹子</a-tag>
+          </div>
           <div class="chat-message-header-region">
             <a-tag color="cyan">{{ msg.region.name }}</a-tag>
           </div>
@@ -95,6 +98,7 @@ export default {
   margin-right: 8px;
 }
 .chat-message-header .chat-message-header-name,
+.chat-message-header-woman,
 .chat-message-header-region,
 .chat-message-header-rank {
   padding-left: 6px;
@@ -106,7 +110,7 @@ export default {
 .chat-message-content .chat-message-content-text {
   width: 100%;
   color: #fff;
-  border-radius: 0px 5px 5px 5px;
+  border-radius: 5px 5px 5px 0px;
   margin-top: 10px;
   padding: 10px;
   background-color: #22202291;

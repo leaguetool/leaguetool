@@ -142,6 +142,8 @@ export default {
       "有妹妹来大佬能C的",
       "灵活4=1，来人秒开",
     ],
+    //连接状态 true:已连接 false:未连接
+    connectStatus: false,
   },
   mutations: {
     [types.CHAT_ADD_MESSAGE](state, message) {
@@ -160,6 +162,9 @@ export default {
     },
     [types.SET_HOTWORDS](state, hotWords) {
       state.hotWords = hotWords;
+    },
+    [types.CHAT_CHANGE_CONNECT_STATUS](state, status) {
+      state.connectStatus = status;
     },
   },
   actions: {
@@ -232,6 +237,10 @@ export default {
     },
     setHotWords({ commit }, hotWords) {
       commit(types.SET_HOTWORDS, hotWords);
+    },
+    //修改连接状态
+    changeConnectStatus({ commit }, status) {
+      commit(types.CHAT_CHANGE_CONNECT_STATUS, status);
     },
   },
   getters: {

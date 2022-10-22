@@ -61,8 +61,9 @@ export default {
     }
     function notificationModel() {
       Modal.warning({
-        title: "公告",
+        title: "通知",
         content: createVNode(Html, { html: notification.value }),
+        centered: true,
       });
     }
     function qq() {}

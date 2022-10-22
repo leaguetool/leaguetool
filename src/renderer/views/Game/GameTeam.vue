@@ -1,16 +1,23 @@
 <template>
-  <a-row class="game-team">
-    <a-col :span="24">
-      <div class="game-left">
-        <ChatHeader />
-        <Chat />
-        <ChatFooter class="game-footer" />
-      </div>
-    </a-col>
-    <!-- <a-col :span="4">
+  <div>
+    <a-alert
+      v-if="connectStatus"
+      message="连接到开黑大厅服务器失败，重试中..."
+      banner
+    />
+    <a-row class="game-team">
+      <a-col :span="24">
+        <div class="game-left">
+          <ChatHeader />
+          <Chat />
+          <ChatFooter class="game-footer" />
+        </div>
+      </a-col>
+      <!-- <a-col :span="4">
       <div class="game-right"><ChatRight /></div>
     </a-col> -->
-  </a-row>
+    </a-row>
+  </div>
 </template>
 
 <script>
@@ -19,6 +26,7 @@ import ChatFooter from "./Chat-Footer/Chat-Footer.vue";
 // import ChatRight from "./Chat-Right/Chat-Right.vue";
 import Chat from "./Chat/Chat.vue";
 import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   components: {
     ChatHeader,
@@ -30,7 +38,11 @@ export default {
     const store = useStore();
     store.dispatch("chat/init");
     // store.dispatch("chat/initBaseInfo");
-    return {};
+    return {
+      connectStatus: computed(() => {
+        return !store.state.chat.connectStatus;
+      }),
+    };
   },
 };
 </script>

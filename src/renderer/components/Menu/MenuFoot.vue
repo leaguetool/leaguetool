@@ -13,7 +13,7 @@
               <div>立即登陆</div>
             </a-space>
           </div>
-          <div class="cursor-font" @click="notCode()">
+          <div class="cursor-font" @click="gotoPath('/system/setting')">
             <a-space :size="8">
               <SettingFilled twoToneColor="#f9cc16" class="cursor-op" />
               <div>应用设置</div>
@@ -58,6 +58,7 @@ import {
   LoginOutlined,
 } from "@ant-design/icons-vue";
 import { ipcRenderer } from "electron";
+import { useRouter } from "vue-router";
 import { message, notification } from "ant-design-vue";
 import { Modal } from "ant-design-vue";
 import { computed, createVNode, ref } from "vue";
@@ -76,6 +77,7 @@ export default {
   },
   setup() {
     const footModel = ref(false);
+    const router = useRouter();
     const store = useStore();
     const checkUpdate = () => {
       footModel.value = false;
@@ -160,6 +162,11 @@ export default {
       return store.state.user.uid;
     });
 
+    const gotoPath = (path) => {
+      footModel.value = false;
+      router.push(path);
+    };
+
     const notCode = () => {
       footModel.value = false;
       message.warning({
@@ -169,7 +176,15 @@ export default {
       });
     };
 
-    return { footModel, isLogin, login, notCode, checkUpdate, logoutOut };
+    return {
+      footModel,
+      isLogin,
+      gotoPath,
+      login,
+      notCode,
+      checkUpdate,
+      logoutOut,
+    };
   },
 };
 </script>

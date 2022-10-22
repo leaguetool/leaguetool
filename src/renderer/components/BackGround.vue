@@ -1,6 +1,7 @@
 <template>
-  <div class="skin-background">
+  <div class="skin-background" :style="{ background: hideBackground }">
     <a-carousel
+      :class="{ hide: hideBackground }"
       ref="carouselRef"
       effect="fade"
       :autoplay="autoplay"
@@ -16,12 +17,14 @@
         ></div>
       </div>
     </a-carousel>
+    <div></div>
   </div>
 </template>
 <script>
 import mitt from "@/common/mitt";
 import { useRoute } from "vue-router";
-import { ref, onMounted, watch } from "vue";
+import { message } from "ant-design-vue";
+import { ref, onMounted, watch, computed } from "vue";
 
 export default {
   setup() {
@@ -58,6 +61,9 @@ export default {
     let speed = ref(time);
     let current = ref(0);
     let autoplay = ref(true);
+    const hideBackground = computed(() => {
+      return autoplay.value;
+    });
     const onChange = (from, to) => {
       current.value = to;
       mitt.emit("skin-background-change", {
@@ -90,6 +96,7 @@ export default {
     watch(
       () => route.path,
       () => {
+        message.destroy();
         autoplay.value = route.meta.background || false;
         // console.log(autoplay);
       }
@@ -108,6 +115,7 @@ export default {
       onChange,
       skinsConverter,
       carouselEle,
+      hideBackground,
     };
   },
 };
@@ -123,6 +131,9 @@ export default {
   width: calc(100%);
   overflow: hidden;
   /* filter: blur(5px); */
+}
+.hide {
+  display: none;
 }
 .background-image {
   height: calc(100vh);

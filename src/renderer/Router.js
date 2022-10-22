@@ -6,15 +6,13 @@ import HomeIndex from "@/views/Home/Index";
 import GameTeam from "@/views/Game/GameTeam";
 import ProFile from "@/views/ProFile/ProFile";
 import Update from "@/views/System/Update.vue";
+import Setting from "@/views/System/Setting.vue";
 import Error from "@/views/Error.vue";
 const routes = [
   {
     path: "/",
     name: "CheckClientRuning",
     component: CheckClientRuning,
-    meta: {
-      background: true,
-    },
   },
   {
     path: "/home",
@@ -26,9 +24,6 @@ const routes = [
         path: "/home/index",
         name: "Index",
         component: HomeIndex,
-        meta: {
-          background: true,
-        },
       },
       {
         path: "/home/pro-file",
@@ -54,6 +49,21 @@ const routes = [
     path: "/update",
     name: "update",
     component: Update,
+  },
+  {
+    path: "/system",
+    name: "system",
+    component: HomePage,
+    children: [
+      {
+        path: "/system/setting",
+        name: "setting",
+        component: Setting,
+        meta: {
+          background: "#2d2d2d",
+        },
+      },
+    ],
   },
   {
     path: "/:catchAll(.*)",
