@@ -14,7 +14,7 @@
           <div class="chat-message-header-name cursor-op" @click="copyName()">
             {{ msg.name }}
           </div>
-          <div v-show="msg.region.name" class="chat-message-header-woman">
+          <div v-show="msg.woman" class="chat-message-header-woman">
             <a-tag color="pink">妹子</a-tag>
           </div>
           <div class="chat-message-header-region">
