@@ -9,8 +9,11 @@
       <a-col :span="24">
         <div class="game-left">
           <ChatHeader />
-          <Chat />
-          <ChatFooter class="game-footer" />
+          <Chat :connectStatus="connectStatus" />
+          <ChatFooter
+            class="game-footer"
+            :class="{ 'adaptation-footer': connectStatus }"
+          />
         </div>
       </a-col>
       <!-- <a-col :span="4">
@@ -60,5 +63,8 @@ export default {
 .game-footer {
   position: absolute;
   bottom: 0px;
+}
+.adaptation-footer {
+  bottom: 38px;
 }
 </style>

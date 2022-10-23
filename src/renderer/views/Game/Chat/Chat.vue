@@ -5,6 +5,7 @@
       :items="chatList"
       :min-item-size="50"
       class="scroller"
+      :class="{ 'chat-body-adaptation': connectStatus }"
       @resize="scrollToBottom()"
     >
       <template v-slot="{ item, index, active }">
@@ -36,8 +37,11 @@ import { useStore } from "vuex";
 import Message from "./Message/Message.vue";
 
 export default {
+  props: {
+    connectStatus: Boolean,
+  },
   components: { Message, DynamicScroller, DynamicScrollerItem },
-  setup: () => {
+  setup: (props) => {
     const store = useStore();
     const scrollToIndex = ref(0);
     const scroller = ref(null);
@@ -52,6 +56,7 @@ export default {
       // }
       return store.state.chat.chatList;
     });
+    console.log(props);
     const scrollToBottom = () => {
       scroller.value.scrollToBottom();
     };
@@ -112,7 +117,7 @@ export default {
 
 <style>
 .chat-body {
-  height: calc(100vh - 140px);
+  /* height: calc(100vh - 140px); */
   /* padding-top: 10px; */
   /* overflow: auto; */
   /* padding-right: 10px; */
@@ -129,5 +134,8 @@ export default {
 }
 .scroller {
   height: calc(100vh - 146px);
+}
+.chat-body-adaptation {
+  height: calc(100vh - 184px);
 }
 </style>
