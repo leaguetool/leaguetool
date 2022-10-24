@@ -13,7 +13,7 @@
               <div>立即登陆</div>
             </a-space>
           </div>
-          <div class="cursor-font" @click="gotoPath('/system/setting')">
+          <div class="cursor-font" @click="setting()">
             <a-space :size="8">
               <SettingFilled twoToneColor="#f9cc16" class="cursor-op" />
               <div>应用设置</div>
@@ -45,6 +45,7 @@
         <div>更多</div>
       </a-space>
     </a-popover>
+    <app-settings ref="AppSettings"></app-settings>
   </div>
 </template>
 
@@ -63,6 +64,7 @@ import { message, notification } from "ant-design-vue";
 import { Modal } from "ant-design-vue";
 import { computed, createVNode, ref } from "vue";
 import { useStore } from "vuex";
+import AppSettings from "../Setting/index.vue";
 import UpdateVNode from "./UpdateVNode";
 import { convertFileSize, convertDateFormat } from "@/common/converter";
 
@@ -74,9 +76,11 @@ export default {
     DownloadOutlined,
     LogoutOutlined,
     LoginOutlined,
+    AppSettings,
   },
   setup() {
     const footModel = ref(false);
+    const AppSettings = ref(null);
     const router = useRouter();
     const store = useStore();
     const checkUpdate = () => {
@@ -168,6 +172,7 @@ export default {
     };
 
     const notCode = () => {
+      console.log(AppSettings.value);
       footModel.value = false;
       message.warning({
         content: "暂未开放，敬请期待~",
@@ -175,15 +180,21 @@ export default {
         key: "notCode",
       });
     };
+    const setting = () => {
+      footModel.value = false;
+      AppSettings.value.show();
+    };
 
     return {
       footModel,
       isLogin,
+      AppSettings,
       gotoPath,
       login,
       notCode,
       checkUpdate,
       logoutOut,
+      setting,
     };
   },
 };
