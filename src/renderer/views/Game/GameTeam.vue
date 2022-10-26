@@ -6,7 +6,7 @@
       banner
     />
     <a-row class="game-team">
-      <a-col :span="24">
+      <a-col :span="20">
         <div class="game-left">
           <ChatHeader />
           <Chat :connectStatus="connectStatus" />
@@ -16,9 +16,9 @@
           />
         </div>
       </a-col>
-      <!-- <a-col :span="4">
-      <div class="game-right"><ChatRight /></div>
-    </a-col> -->
+      <a-col :span="4">
+        <div class="game-right"><ChatRight /></div>
+      </a-col>
     </a-row>
   </div>
 </template>
@@ -26,7 +26,7 @@
 <script>
 import ChatHeader from "./Chat-Header/Chat-Header.vue";
 import ChatFooter from "./Chat-Footer/Chat-Footer.vue";
-// import ChatRight from "./Chat-Right/Chat-Right.vue";
+import ChatRight from "./Chat-Right/Chat-Right.vue";
 import Chat from "./Chat/Chat.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
@@ -34,7 +34,7 @@ export default {
   components: {
     ChatHeader,
     ChatFooter,
-    // ChatRight,
+    ChatRight,
     Chat,
   },
   setup() {

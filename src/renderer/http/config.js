@@ -4,7 +4,7 @@ export default {
     if (process.env.NODE_ENV === "development") {
       return "http://localhost:9999";
     } else {
-      return "https://lol.s6.design";
+      return "https://lol.s6.design/api";
     }
   },
 };
