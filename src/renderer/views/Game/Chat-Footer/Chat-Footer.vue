@@ -251,7 +251,7 @@ export default {
   color: #fff;
 }
 .chat-footer-send {
-  padding: 0px 20px;
+  padding: 0px 5px 0px 0px;
 }
 .chat-footer-send .ant-btn-primary {
   border-color: #ffffff00;
