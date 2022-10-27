@@ -1,35 +1,31 @@
 <template>
   <div class="chat-body">
-    <DynamicScroller
-      ref="scroller"
-      :items="chatList"
-      :min-item-size="50"
+    <VirtualList
+      v-show="!!chatList.length"
+      ref="vsl"
       class="scroller"
-      :class="{ 'chat-body-adaptation': connectStatus }"
-      @resize="scrollToBottom()"
+      :class="{ overflow: overflow, 'chat-body-adaptation': connectStatus }"
+      :data-key="'id'"
+      :data-sources="chatList"
+      :data-component="Message"
+      :estimate-size="100"
+      @scroll="scroll"
+      @tobottom="onBottom"
+      @resized="onItemRendered"
     >
-      <template v-slot="{ item, index, active }">
-        <DynamicScrollerItem
-          :item="item"
-          :active="active"
-          :size-dependencies="[item.content]"
-          :data-index="index"
-        >
-          <Message :msg="item" :key="index">
-            <template v-slot:time>
-              <div v-show="showTime(item, index)" class="message-time">
-                <span>{{ formatTime(item) }}</span>
-              </div>
-            </template>
-          </Message>
-        </DynamicScrollerItem>
+      <template #header>
+        <div v-show="overflow" class="header">
+          <!-- <div class="spinner" v-show="!finished"></div> -->
+          <!-- <div class="finished" v-show="finished">没有更多了</div> -->
+        </div>
       </template>
-    </DynamicScroller>
+    </VirtualList>
   </div>
 </template>
 
 <script>
-import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
+import VirtualList from "vue3-virtual-scroll-list";
+// import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 import { DynamicScroller, DynamicScrollerItem } from "vue-virtual-scroller";
 import { dateformatNotsecond, dateMinute, getToday } from "@/common/converter";
 import { computed, ref } from "vue";
@@ -40,8 +36,12 @@ export default {
   props: {
     connectStatus: Boolean,
   },
-  components: { Message, DynamicScroller, DynamicScrollerItem },
+  components: { Message, VirtualList, DynamicScroller, DynamicScrollerItem },
   setup: (props) => {
+    const flg = ref(true);
+    const isbottom = ref(true);
+    const vsl = ref();
+    const overflow = ref(false);
     const store = useStore();
     const scrollToIndex = ref(0);
     const scroller = ref(null);
@@ -58,7 +58,52 @@ export default {
     });
     console.log(props);
     const scrollToBottom = () => {
-      scroller.value.scrollToBottom();
+      // scroller.value.scrollToBottom();
+    };
+
+    const scroll = () => {
+      setTimeout(() => {
+        isbottom.value = false;
+      }, 20);
+      console.log(isbottom.value);
+    };
+
+    const onBottom = () => {
+      console.log("onBottom");
+      isbottom.value = true;
+      console.log(isbottom.value);
+    };
+
+    const onItemRendered = () => {
+      console.log("onItemRendered", vsl.value);
+      if (!vsl.value) {
+        return;
+      }
+      // first page items are all mounted, scroll to bottom
+      // if (!param.isFirstPageReady && vsl.value.getSizes() >= param.pageSize) {
+      //   param.isFirstPageReady = true;
+      // }
+      if (flg.value) {
+        flg.value = false;
+        vsl.value.scrollToBottom();
+      }
+      console.log(isbottom.value);
+      if (isbottom.value) {
+        setVirtualListToBottom();
+      }
+      checkOverFlow();
+    };
+
+    const checkOverFlow = () => {
+      if (vsl.value) {
+        overflow.value = vsl.value.getScrollSize() > vsl.value.getClientSize();
+      }
+    };
+
+    const setVirtualListToBottom = () => {
+      if (vsl.value) {
+        vsl.value.scrollToBottom();
+      }
     };
 
     const getDateStr = (AddDayCount) => {
@@ -77,10 +122,17 @@ export default {
     };
 
     return {
+      flg,
       chatList,
       scrollToIndex,
       scroller,
       scrollToBottom,
+      onItemRendered,
+      vsl,
+      overflow,
+      Message: Message,
+      onBottom,
+      scroll,
       showTime: (message, index) => {
         if (index === 0) {
           return true;
@@ -133,6 +185,7 @@ export default {
   border-radius: 10px;
 }
 .scroller {
+  overflow-y: auto;
   height: calc(100vh - 146px);
 }
 .chat-body-adaptation {

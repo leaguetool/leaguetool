@@ -2,33 +2,33 @@
   <div>
     <!-- 消息中间的时间 -->
     <slot name="time" />
-    <div class="chat-message chat-item" :class="{ 'chat-self': msg.isSelf }">
+    <div class="chat-message chat-item" :class="{ 'chat-self': source.isSelf }">
       <!-- 头像 -->
       <div class="chat-message-avatar">
-        <a-avatar :size="54" :src="msg.avatar" />
+        <a-avatar :size="54" :src="source.avatar" />
       </div>
       <!-- 消息体 -->
       <div>
         <!-- 消息头 -->
-        <div class="chat-message-header" v-show="!msg.isSelf">
+        <div class="chat-message-header" v-show="!source.isSelf">
           <div class="chat-message-header-name cursor-op" @click="copyName()">
-            {{ msg.name }}
+            {{ source.name }}
           </div>
-          <div v-show="msg.woman" class="chat-message-header-woman">
+          <div v-show="source.woman" class="chat-message-header-woman">
             <a-tag color="pink">妹子</a-tag>
           </div>
           <div class="chat-message-header-region">
-            <a-tag color="cyan">{{ msg.region.name }}</a-tag>
+            <a-tag color="cyan">{{ source.region.name }}</a-tag>
           </div>
           <div class="chat-message-header-rank">
-            <a-tag color="blue">{{ msg.rank }}</a-tag>
+            <a-tag color="blue">{{ source.rank }}</a-tag>
           </div>
         </div>
         <!-- 消息内容 -->
         <div class="chat-message-content">
           <div
             class="chat-message-content-text"
-            v-dompurify-html:svgandimg="msg.content"
+            v-dompurify-html:svgandimg="source.content"
           ></div>
         </div>
       </div>
@@ -42,13 +42,13 @@ import { message } from "ant-design-vue";
 // import {ref} from 'vue'
 export default {
   props: {
-    msg: { type: Object },
+    source: { type: Object },
   },
   setup: (props) => {
-    // console.log(props.msg);
+    // console.log(props.source);
     //将名字复制到粘贴板
     let copyName = () => {
-      navigator.clipboard.writeText(props.msg.name);
+      navigator.clipboard.writeText(props.source.name);
       message.success("已复制到粘贴板", 1, null);
     };
     return { copyName };
