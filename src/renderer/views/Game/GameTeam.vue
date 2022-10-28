@@ -9,10 +9,11 @@
       <a-col :span="20">
         <div class="game-left">
           <ChatHeader />
-          <Chat :connectStatus="connectStatus" />
+          <Chat ref="chatBody" :connectStatus="connectStatus" />
           <ChatFooter
             class="game-footer"
             :class="{ 'adaptation-footer': connectStatus }"
+            @sendMessage="onSendMessage"
           />
         </div>
       </a-col>
@@ -29,7 +30,7 @@ import ChatFooter from "./Chat-Footer/Chat-Footer.vue";
 import ChatRight from "./Chat-Right/Chat-Right.vue";
 import Chat from "./Chat/Chat.vue";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 export default {
   components: {
     ChatHeader,
@@ -38,13 +39,19 @@ export default {
     Chat,
   },
   setup() {
+    const chatBody = ref(null);
     const store = useStore();
     store.dispatch("chat/init");
     // store.dispatch("chat/initBaseInfo");
     return {
+      chatBody,
       connectStatus: computed(() => {
         return !store.state.chat.connectStatus;
       }),
+      onSendMessage: (message) => {
+        //自己发送消息要滚动到底部
+        chatBody.value.setVirtualListToBottom();
+      },
     };
   },
 };

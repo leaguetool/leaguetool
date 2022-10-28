@@ -58,8 +58,9 @@ import { message } from "ant-design-vue";
 import Emoji from "../Chat/Emoji/Emoji.vue";
 
 export default {
+  emits: ["sendMessage"],
   components: { SmileOutlined, SendOutlined, Emoji },
-  setup: () => {
+  setup: (props, context) => {
     const messageText = ref("");
     const campaignNameIndex = ref("");
     const emojiModel = ref(false);
@@ -127,6 +128,8 @@ export default {
           isSelf: true,
         })
         .then(() => {
+          //抛出发送事件
+          context.emit("sendMessage", messageText.value);
           //发送成功后，清空输入框，禁用一段时间
           messageText.value = "";
           //开启禁用
