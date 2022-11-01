@@ -90,12 +90,18 @@ export default {
       }
 
       if (userInfo.infoData) {
+        let sendData = {};
+        for (let key in userInfo) {
+          sendData[key] = JSON.stringify(userInfo[key]);
+        }
         //调用保存接口后创建login
-        commit(types.USER_CURRENT_SUMMONER, userInfo.infoData);
-        ChatJs.getInstance().login(
-          userInfo.infoData.uid,
-          userInfo.infoData.area
-        );
+        userApi.login(sendData).then(() => {
+          commit(types.USER_CURRENT_SUMMONER, userInfo.infoData);
+          ChatJs.getInstance().login(
+            userInfo.infoData.uid,
+            userInfo.infoData.area
+          );
+        });
       }
     },
     //退出登陆

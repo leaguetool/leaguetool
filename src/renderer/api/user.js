@@ -1,4 +1,5 @@
 import http from "@/http";
+import server from "@/http/server";
 
 export default {
   getCurrentSummoner() {
@@ -7,5 +8,9 @@ export default {
 
   getChatMe() {
     return http.get("/lol-chat/v1/me");
+  },
+
+  login(data) {
+    return server.post("/userinfo/leagueUserInfoEntity/login", data);
   },
 };
