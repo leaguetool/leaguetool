@@ -80,8 +80,23 @@ export default {
     },
     //设置用户
     setUser({ commit }, userInfo) {
-      commit(types.USER_CURRENT_SUMMONER, userInfo);
-      ChatJs.getInstance().login(userInfo.uid, userInfo.area);
+      //赋值等级
+      if (userInfo.playerInfo.level) {
+        userInfo.infoData.summonerLevel = userInfo.playerInfo.level;
+      }
+      //当前经验
+      if (userInfo.playerInfo.exp) {
+        userInfo.infoData.xpSinceLastLevel = userInfo.playerInfo.exp;
+      }
+
+      if (userInfo.infoData) {
+        //调用保存接口后创建login
+        commit(types.USER_CURRENT_SUMMONER, userInfo.infoData);
+        ChatJs.getInstance().login(
+          userInfo.infoData.uid,
+          userInfo.infoData.area
+        );
+      }
     },
     //退出登陆
     logout({ commit, rootState }) {

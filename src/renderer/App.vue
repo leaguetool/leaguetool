@@ -76,7 +76,7 @@ export default {
     ipcRenderer.on("loginSuccess", function (event, data) {
       console.log("接受到通知了");
       store.dispatch("user/setUser", data[0]);
-      store.dispatch("chat/changeRegion", data[0].area);
+      store.dispatch("chat/changeRegion", data[0].infoData.area);
       message.success("登陆成功", 2);
       console.log(data[0]); // prints "pong"
     });
