@@ -23,6 +23,7 @@ export const createWindow = () => {
     width: 1000,
     height: 720,
     frame: false,
+    backgroundColor: "#2d2d2d",
     titleBarStyle: "hidden",
     // transparent: true,
     // backgroundColor: "#f5f5f5",
