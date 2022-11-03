@@ -247,15 +247,15 @@ export default {
     },
     //聊天历史记录
     setChatHistory({ commit, rootState }, chatHistory) {
-      // chatHistory.map((message) => {
-      //   message.region = {
-      //     id: message.userArea,
-      //     name: message.userAreaName,
-      //   };
-      //   message.isSelf = message.uid != rootState.user.uid;
-      //   message.time = message.createTime;
-      //   return message;
-      // });
+      chatHistory.map((message) => {
+        // message.region = {
+        //   id: message.userArea,
+        //   name: message.userAreaName,
+        // };
+        message.isSelf = message.uid == rootState.user.uid;
+        // message.time = message.createTime;
+        return message;
+      });
       commit(types.SET_CHAT_HISTORY, chatHistory);
     },
   },

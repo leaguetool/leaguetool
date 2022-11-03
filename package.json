@@ -1,13 +1,13 @@
 {
   "name": "leaguetool",
-  "version": "0.6.5",
+  "version": "0.6.8",
   "productName": "LeagueTool",
   "author": {
     "name": "Lemon",
     "email": "83727128@qq.com",
     "url": "https://github.com/good-ideal"
   },
-  "description": "LCU client API tool",
+  "description": "英雄联盟开黑大厅",
   "private": true,
   "scripts": {
     "start": "vue-cli-service electron:serve",

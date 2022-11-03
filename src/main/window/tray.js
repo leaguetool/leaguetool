@@ -10,38 +10,38 @@ module.exports = {
     let trayIcon = path.join(__static, "/favicon.ico");
     tray = new Tray(trayIcon);
     const contextMenu = Menu.buildFromTemplate([
-      {
-        label: "设置",
-        click: function() {
-          console.log("点击设置");
-        },
-      },
-      {
-        label: "帮助",
-        click: function() {
-          console.log("点击帮助");
-        },
-      },
-      {
-        label: "打开调试面板",
-        click() {
-          mainWindow.webContents.openDevTools();
-        },
-      },
+      // {
+      //   label: "设置",
+      //   click: function() {
+      //     console.log("点击设置");
+      //   },
+      // },
+      // {
+      //   label: "帮助",
+      //   click: function() {
+      //     console.log("点击帮助");
+      //   },
+      // },
+      // {
+      //   label: "打开调试面板",
+      //   click() {
+      //     mainWindow.webContents.openDevTools();
+      //   },
+      // },
       {
         label: "关于LeagueTool",
-        click: function() {
+        click: function () {
           dialog.showMessageBox({
             title: pkg.name,
             message: pkg.description,
-            detail: `作者: ${pkg.author.name}\nversion: ${pkg.version}`,
+            detail: `Q群：810322958\n作者: ${pkg.author.name}\nversion: ${pkg.version}`,
           });
           console.log("点击关于LeagueTool");
         },
       },
       {
         label: "退出LeagueTool",
-        click: function() {
+        click: function () {
           app.exit(0);
         },
       },

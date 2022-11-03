@@ -8,9 +8,8 @@ app.whenReady().then(() => {
       return false;
     });
   }
-});
-
-app.on("will-quit", () => {
-  // 注销所有快捷键
-  globalShortcut.unregisterAll();
+  app.on("will-quit", () => {
+    // 注销所有快捷键
+    globalShortcut.unregisterAll();
+  });
 });
