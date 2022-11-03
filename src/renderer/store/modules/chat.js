@@ -166,6 +166,9 @@ export default {
     [types.CHAT_CHANGE_CONNECT_STATUS](state, status) {
       state.connectStatus = status;
     },
+    [types.SET_CHAT_HISTORY](state, chatHistory) {
+      state.chatList = chatHistory || [];
+    },
   },
   actions: {
     init({ rootState, state }) {
@@ -241,6 +244,19 @@ export default {
     //修改连接状态
     changeConnectStatus({ commit }, status) {
       commit(types.CHAT_CHANGE_CONNECT_STATUS, status);
+    },
+    //聊天历史记录
+    setChatHistory({ commit, rootState }, chatHistory) {
+      // chatHistory.map((message) => {
+      //   message.region = {
+      //     id: message.userArea,
+      //     name: message.userAreaName,
+      //   };
+      //   message.isSelf = message.uid != rootState.user.uid;
+      //   message.time = message.createTime;
+      //   return message;
+      // });
+      commit(types.SET_CHAT_HISTORY, chatHistory);
     },
   },
   getters: {

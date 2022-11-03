@@ -141,6 +141,7 @@ export default class ChatJs {
           } catch (error) {
             console.error(error);
           }
+          console.log("ws.onclose", self.closeStatus);
           if (!self.closeStatus) {
             self.reconn(event);
           }
@@ -186,6 +187,14 @@ export default class ChatJs {
       this.tio.ws.closeStatus = true;
       this.tio.ws.ws.close();
       this.tio = null;
+    }
+  }
+
+  //不重连
+  closeStatus() {
+    if (this.tio) {
+      this.tio.ws.closeStatus = true;
+      this.tio.ws.ws.close();
     }
   }
 

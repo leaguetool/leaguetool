@@ -102,7 +102,7 @@ export default {
 .menu {
   width: 200px;
   height: 100%;
-  color: #eeeeee;
+  /* color: #eeeeee; */
   background-color: #222022;
   padding-top: 40px;
   text-align: center;

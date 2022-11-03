@@ -41,7 +41,7 @@ export default {
   setup() {
     const chatBody = ref(null);
     const store = useStore();
-    store.dispatch("chat/init");
+
     // store.dispatch("chat/initBaseInfo");
     return {
       chatBody,

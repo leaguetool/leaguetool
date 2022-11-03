@@ -13,6 +13,8 @@ export const USER_LOGOUT = "USER_LOGOUT";
 //chat
 //添加一条聊天信息
 export const CHAT_ADD_MESSAGE = "CHAT_ADD_MESSAGE";
+//设置聊天记录
+export const SET_CHAT_HISTORY = "SET_CHAT_HISTORY";
 //切换大区
 export const CHAT_CHANGE_REGION = "CHAT_CHANGE_REGION";
 //改变hot

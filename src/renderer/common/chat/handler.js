@@ -1,6 +1,7 @@
 import store from "@/store/index.js";
 import ChatJs from "@/common/chat/chat.js";
 import { message } from "ant-design-vue";
+import mitt from "@/common/mitt";
 //定义一个key
 const key = "chatConnect";
 let Handler = function () {
@@ -58,6 +59,26 @@ let Handler = function () {
             if (baseInfo.hotWords) {
               store.dispatch("chat/setHotWords", baseInfo.hotWords);
             }
+            break;
+          }
+          case "CHAT_HISTORY": {
+            // console.log("聊天记录", msgBody.data.data);
+            store
+              .dispatch(
+                "chat/setChatHistory",
+                JSON.parse(msgBody.data.data) || []
+              )
+              .then(() => {
+                mitt.emit("send-message-end", {});
+              });
+            break;
+          }
+
+          case "ACCOUNT_ERROR": {
+            console.log("ACCOUNT");
+            console.log(msgBody.data.data);
+            ChatJs.getInstance().closeStatus();
+            break;
           }
         }
         break;

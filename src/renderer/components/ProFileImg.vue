@@ -1,22 +1,25 @@
 <template>
-  <a-tooltip placement="bottom" arrowPointAtCenter>
-    <template #title>
-      <div class="tooltip">
-        <div>当前等级：{{ user.summonerLevel }}</div>
-        <div>
-          经验值：{{ user.xpSinceLastLevel }} / {{ user.xpUntilNextLevel }}
+  <div>
+    <div class="pro-name">{{ user.displayName }}</div>
+    <a-tooltip placement="bottom" arrowPointAtCenter>
+      <template #title>
+        <div class="tooltip">
+          <div>当前等级：{{ user.summonerLevel }}级</div>
+          <div>
+            经验值：{{ user.xpSinceLastLevel
+            }}<!--  / {{ user.xpUntilNextLevel }}-->
+          </div>
         </div>
-      </div>
-    </template>
+      </template>
 
-    <a-avatar
-      @click.stop="clickHead"
-      :size="60"
-      :src="user.avatar"
-      :title="user.displayName"
-      class="head-img"
-    />
-    <!-- <a-badge :offset="[-5, 50]" @click="changeStatus">
+      <a-avatar
+        @click.stop="clickHead"
+        :size="60"
+        :src="user.avatar"
+        :title="user.displayName"
+        class="head-img"
+      />
+      <!-- <a-badge :offset="[-5, 50]" @click="changeStatus">
       <template #count>
         <CheckCircleFilled
           v-if="user.onlineStatus === 'chat'"
@@ -46,7 +49,8 @@
         class="head-img"
       />
     </a-badge> -->
-  </a-tooltip>
+    </a-tooltip>
+  </div>
 </template>
 <script>
 import { computed } from "vue";
@@ -89,5 +93,8 @@ export default {
   margin: 0px !important;
 }
 .tooltip {
+}
+.pro-name {
+  padding: 0px 10px 10px 10px;
 }
 </style>

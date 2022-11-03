@@ -53,7 +53,7 @@ export default {
 
 <style scoped>
 .menu-item-box span {
-  color: #fff;
+  /* color: #fff; */
 }
 .ment-item {
   position: relative;
@@ -91,7 +91,7 @@ export default {
 }
 .ment-item.current {
   opacity: 1;
-  color: #fff;
+  /* color: #fff; */
   background: #2d2d2d;
   /*background: #f9cc16;
   /* background: -webkit-linear-gradient(to right, #faad14, #f9cc16);

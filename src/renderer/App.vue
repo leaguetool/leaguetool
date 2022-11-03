@@ -106,7 +106,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
-  color: #fff;
+  color: #ffffffbf;
   /* width: 1000px; */
   /* height: 720px; */
   width: 100%;

@@ -22,6 +22,7 @@ import VirtualList from "vue3-virtual-scroll-list";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import MessageItem from "./MessageItem.vue";
+import mitt from "@/common/mitt";
 
 export default {
   props: {
@@ -83,6 +84,9 @@ export default {
         vsl.value.scrollToBottom();
       }
     };
+    mitt.on("send-message-end", () => {
+      setVirtualListToBottom();
+    });
 
     return {
       chatList,

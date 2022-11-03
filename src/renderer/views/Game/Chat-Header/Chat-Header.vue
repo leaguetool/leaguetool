@@ -25,7 +25,7 @@
         {{ currentRegion.name }} <SwapOutlined />
       </div> -->
 
-      <a-modal v-model:visible="visible" title="大区选择">
+      <a-modal v-model:visible="visible" class="region-modal" title="大区选择">
         <div v-for="(item, index) in regions" :key="index" class="region-sw">
           <a-col :span="4">
             <div class="region-fa">{{ item.name }}</div>
@@ -98,6 +98,10 @@ export default {
   letter-spacing: 2px;
   display: flex;
   justify-content: space-between;
+  -webkit-user-select: none;
+}
+.region-modal {
+  -webkit-user-select: none;
 }
 .chat-header .chat-title,
 .chat-region,
@@ -123,7 +127,7 @@ export default {
   cursor: pointer;
 }
 .region-active {
-  background-color: #f9cc16 !important;
-  color: #fff;
+  background-color: #c5a421 !important;
+  color: #ffffffbf;
 }
 </style>
