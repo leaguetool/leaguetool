@@ -19,7 +19,7 @@
 
 <script>
 import VirtualList from "vue3-virtual-scroll-list";
-import { computed, ref } from "vue";
+import { computed, ref, nextTick } from "vue";
 import { useStore } from "vuex";
 import MessageItem from "./MessageItem.vue";
 import mitt from "@/common/mitt";
@@ -66,14 +66,9 @@ export default {
       if (!vsl.value) {
         return;
       }
-      //第一进来就要滚动到底部
+      // //第一进来就要滚动到底部
       if (firstEntry.value) {
         firstEntry.value = false;
-        vsl.value.scrollToBottom();
-      }
-
-      //当有新消息来了,如果当前在底部就让继续滚动到底部,否则滚动不会变化
-      if (isbottom.value) {
         setVirtualListToBottom();
       }
     };
@@ -84,8 +79,26 @@ export default {
         vsl.value.scrollToBottom();
       }
     };
+
     mitt.on("send-message-end", () => {
       setVirtualListToBottom();
+    });
+
+    //触底后滚动
+    const checkBottom = () => {
+      const bottom =
+        vsl.value.getScrollSize() -
+          (vsl.value.getOffset() + vsl.value.getClientSize()) <=
+        100;
+      console.log(bottom);
+      if (bottom) {
+        setVirtualListToBottom();
+      }
+    };
+
+    //此方法是用来判断当前滚动条是否在底部，如果在底部就滚动，不在就不滚动
+    mitt.on("send-message-checkbottom", () => {
+      checkBottom();
     });
 
     return {
@@ -93,6 +106,7 @@ export default {
       firstEntry,
       vsl,
       MessageItem: MessageItem,
+      checkBottom,
       setVirtualListToBottom,
       onItemRendered,
       onBottom,

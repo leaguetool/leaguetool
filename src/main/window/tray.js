@@ -22,12 +22,12 @@ module.exports = {
       //     console.log("点击帮助");
       //   },
       // },
-      // {
-      //   label: "打开调试面板",
-      //   click() {
-      //     mainWindow.webContents.openDevTools();
-      //   },
-      // },
+      {
+        label: "打开调试面板",
+        click() {
+          mainWindow.webContents.openDevTools();
+        },
+      },
       {
         label: "关于LeagueTool",
         click: function () {
