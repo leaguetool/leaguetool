@@ -9,7 +9,7 @@ module.exports = {
     // 系统托盘图标目录
     let trayIcon = path.join(__static, "/favicon.ico");
     tray = new Tray(trayIcon);
-    const contextMenu = Menu.buildFromTemplate([
+    let menuArr = [
       // {
       //   label: "设置",
       //   click: function() {
@@ -22,12 +22,6 @@ module.exports = {
       //     console.log("点击帮助");
       //   },
       // },
-      {
-        label: "打开调试面板",
-        click() {
-          mainWindow.webContents.openDevTools();
-        },
-      },
       {
         label: "关于LeagueTool",
         click: function () {
@@ -45,7 +39,16 @@ module.exports = {
           app.exit(0);
         },
       },
-    ]);
+    ];
+    if (!app.isPackaged) {
+      menuArr.unshift({
+        label: "打开调试面板",
+        click() {
+          mainWindow.webContents.openDevTools();
+        },
+      });
+    }
+    const contextMenu = Menu.buildFromTemplate(menuArr);
     tray.setToolTip("LeagueTool");
     tray.setContextMenu(contextMenu);
 

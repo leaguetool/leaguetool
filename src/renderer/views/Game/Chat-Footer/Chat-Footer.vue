@@ -251,7 +251,7 @@ export default {
 }
 .chat-footer-input .ant-input {
   background-color: #fff0;
-  color: #fff;
+  color: #ffffffbf;
 }
 .chat-footer-send {
   padding: 0px 5px 0px 0px;
@@ -259,6 +259,7 @@ export default {
 .chat-footer-send .ant-btn-primary {
   border-color: #ffffff00;
   background: #ffffff00;
+  color: #ffffffbf;
 }
 .chat-footer-send .ant-btn-primary:hover {
   border-color: #ffffff00;

@@ -10,12 +10,12 @@ import Setting from "@/views/System/Setting.vue";
 import Error from "@/views/Error.vue";
 const routes = [
   {
-    path: "/",
+    path: "/CheckClientRuning",
     name: "CheckClientRuning",
     component: CheckClientRuning,
   },
   {
-    path: "/home",
+    path: "/",
     name: "HomePage",
     component: HomePage,
     redirect: "/home/index",

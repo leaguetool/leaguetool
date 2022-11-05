@@ -14,21 +14,23 @@
       @resized="onItemRendered"
     >
     </VirtualList>
+    <MessageTips class="chat-message-tips" />
   </div>
 </template>
 
 <script>
 import VirtualList from "vue3-virtual-scroll-list";
-import { computed, ref, nextTick } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import MessageItem from "./MessageItem.vue";
+import MessageTips from "./MessageTips/MessageTips.vue";
 import mitt from "@/common/mitt";
 
 export default {
   props: {
     connectStatus: Boolean,
   },
-  components: { MessageItem, VirtualList },
+  components: { MessageItem, MessageTips, VirtualList },
   setup: () => {
     const firstEntry = ref(true);
     const isbottom = ref(true);
@@ -60,15 +62,22 @@ export default {
     //触底事件
     const onBottom = throttle(() => {
       isbottom.value = true;
+      //滚动到底部那么就需要把底部新消息数量统计清零
+      store.dispatch("chat/setMessageTipsCount", 0);
     }, 500);
 
     const onItemRendered = () => {
       if (!vsl.value) {
         return;
       }
-      // //第一进来就要滚动到底部
+      //第一进来就要滚动到底部
       if (firstEntry.value) {
         firstEntry.value = false;
+        setVirtualListToBottom();
+      }
+
+      //当有新消息来了,如果当前在底部就让继续滚动到底部,否则滚动不会变化
+      if (isbottom.value) {
         setVirtualListToBottom();
       }
     };
@@ -77,28 +86,18 @@ export default {
     const setVirtualListToBottom = () => {
       if (vsl.value) {
         vsl.value.scrollToBottom();
+        //滚动到底部那么就需要把底部新消息数量统计清零
+        store.dispatch("chat/setMessageTipsCount", 0);
       }
     };
-
     mitt.on("send-message-end", () => {
       setVirtualListToBottom();
     });
-
-    //触底后滚动
-    const checkBottom = () => {
-      const bottom =
-        vsl.value.getScrollSize() -
-          (vsl.value.getOffset() + vsl.value.getClientSize()) <=
-        100;
-      console.log(bottom);
-      if (bottom) {
-        setVirtualListToBottom();
-      }
-    };
-
-    //此方法是用来判断当前滚动条是否在底部，如果在底部就滚动，不在就不滚动
     mitt.on("send-message-checkbottom", () => {
-      checkBottom();
+      if (!isbottom.value) {
+        //如果不在底部,那么就需要把底部新消息数量统计加一 内部使用了count++
+        store.dispatch("chat/setMessageTipsCount");
+      }
     });
 
     return {
@@ -106,7 +105,6 @@ export default {
       firstEntry,
       vsl,
       MessageItem: MessageItem,
-      checkBottom,
       setVirtualListToBottom,
       onItemRendered,
       onBottom,
@@ -118,10 +116,16 @@ export default {
 
 <style>
 .chat-body {
+  position: relative;
   /* height: calc(100vh - 140px); */
   /* padding-top: 10px; */
   /* overflow: auto; */
   /* padding-right: 10px; */
+}
+.chat-message-tips {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
 }
 
 .scroller {

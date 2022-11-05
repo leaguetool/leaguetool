@@ -31,6 +31,7 @@ let Handler = function () {
 
     switch (msgBody.type) {
       case "CHAT": {
+        mitt.emit("send-message-checkbottom", {});
         store.dispatch("chat/addMessage", JSON.parse(msgBody.data));
         break;
       }

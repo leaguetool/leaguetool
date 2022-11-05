@@ -142,6 +142,7 @@ export default {
       "有妹妹来大佬能C的",
       "灵活4=1，来人秒开",
     ],
+    messageTipsCount: 0,
     //连接状态 true:已连接 false:未连接
     connectStatus: false,
   },
@@ -168,6 +169,13 @@ export default {
     },
     [types.SET_CHAT_HISTORY](state, chatHistory) {
       state.chatList = chatHistory || [];
+    },
+    [types.SET_MESSAGE_TIPS_COUNT](state, count) {
+      if (!count && count !== 0) {
+        state.messageTipsCount++;
+      } else {
+        state.messageTipsCount = count || 0;
+      }
     },
   },
   actions: {
@@ -257,6 +265,10 @@ export default {
         return message;
       });
       commit(types.SET_CHAT_HISTORY, chatHistory);
+    },
+    //统计滚动在中间时的未读消息数量
+    setMessageTipsCount({ commit }, count) {
+      commit(types.SET_MESSAGE_TIPS_COUNT, count);
     },
   },
   getters: {

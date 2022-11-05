@@ -25,6 +25,8 @@ export const CHAT_EMOJI_EMOJIS = "CHAT_EMOJI_EMOJIS";
 export const SET_HOTWORDS = "SET_HOTWORDS";
 //设置连接状态
 export const CHAT_CHANGE_CONNECT_STATUS = "CHAT_CHANGE_CONNECT_STATUS";
+//设置滚动中间时未读消息数量
+export const SET_MESSAGE_TIPS_COUNT = "SET_MESSAGE_TIPS_COUNT";
 
 //system
 //设置系统公告
