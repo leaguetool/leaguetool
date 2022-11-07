@@ -14,11 +14,18 @@
       @resized="onItemRendered"
     >
     </VirtualList>
+    <a-empty
+      class="chat-empty"
+      v-show="!chatList.length"
+      description="还没有人在此发言过嗷~"
+      :image="simpleImage"
+    />
     <MessageTips class="chat-message-tips" />
   </div>
 </template>
 
 <script>
+import { Empty } from "ant-design-vue";
 import VirtualList from "vue3-virtual-scroll-list";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
@@ -109,6 +116,7 @@ export default {
       onItemRendered,
       onBottom,
       scroll,
+      simpleImage: Empty.PRESENTED_IMAGE_DEFAULT,
     };
   },
 };
@@ -126,6 +134,10 @@ export default {
   position: absolute;
   bottom: 5px;
   right: 10px;
+}
+
+.chat-empty {
+  padding-top: 20%;
 }
 
 .scroller {
