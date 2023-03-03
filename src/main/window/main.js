@@ -5,6 +5,7 @@ const {
 } = require("electron-devtools-installer");
 const { createTray } = require("./tray");
 const { gameClientRunnerTesting } = require("../game/game");
+const { autoStartApp } = require("../common/system");
 const path = require("path");
 
 var mainWindow;
@@ -44,8 +45,10 @@ export const createWindow = () => {
   loadingView.setBounds({ x: 0, y: 0, width: 1000, height: 720 });
   //当加载层视图 文本加载完成后触发该事件
   loadingView.webContents.on("dom-ready", () => {
-    //显示主进程
-    mainWindow.show();
+    if (process.argv.indexOf("--openAsHidden") < 0) {
+      //显示主进程
+      mainWindow.show();
+    }
   });
 
   if (app.isPackaged) {

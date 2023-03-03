@@ -26,6 +26,8 @@ import CloseOutlined from "@ant-design/icons-vue/CloseOutlined";
 import MinusOutlined from "@ant-design/icons-vue/MinusOutlined";
 import FullscreenOutlined from "@ant-design/icons-vue/FullscreenOutlined";
 import { ipcRenderer } from "electron";
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
   components: {
@@ -43,8 +45,12 @@ export default {
     closable: { type: [Boolean, String], default: true },
   },
   setup() {
+    const store = useStore();
+    const closeToTray = computed(() => {
+      return store.state.system.settings.closeToTray;
+    });
     function closeAppcloseApp() {
-      ipcRenderer.send("closeApp");
+      ipcRenderer.send("closeApp", closeToTray.value);
     }
     function minimizeApp() {
       ipcRenderer.send("minimizeApp");

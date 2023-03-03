@@ -5,7 +5,7 @@ const { createUpdateWindow } = require("./window/update");
 const { checkForUpdates } = require("./update");
 require("./common");
 require("./cmd");
-require("./ipc");
+require("./common/ipc");
 //插件思想先暂时关闭
 // require("./plugin");
 

@@ -9,13 +9,18 @@
 import Menu from "@/components/Menu/Menu";
 import Content from "@/components/Content/Content";
 import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   components: { Menu, Content },
   setup() {
     const store = useStore();
+    const settings = computed(() => {
+      return store.state.system.settings;
+    });
     // store.dispatch("user/initSummoner");
     store.dispatch("chat/init");
     store.dispatch("system/getNotice");
+    store.dispatch("system/setAutoStart", settings.value.autoStart);
     store.dispatch("chat/getEmoji");
     return {};
   },

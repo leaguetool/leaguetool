@@ -46,7 +46,6 @@
           v-model:activeKey="activeKey"
           tab-position="left"
           :style="{ height: '300px' }"
-          @tabScroll="callback"
         >
           <a-tab-pane v-for="tab in tabs" :key="tab.key" :tab="tab.title">
             <div class="setting-title">{{ tab.content }}</div>
@@ -74,7 +73,7 @@ export default {
       {
         key: 1,
         title: "基本设置",
-        content: "基本设置",
+        content: "",
         component: SettingBasic,
       },
       {
