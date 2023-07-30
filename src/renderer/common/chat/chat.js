@@ -1,4 +1,5 @@
 import handler from "./handler";
+import { messageType } from "./messageType";
 
 let ws_protocol = "ws"; // ws 或 wss
 let ip = "127.0.0.1";
@@ -201,7 +202,7 @@ export default class ChatJs {
   //发送聊天信息
   sendChatMsg(msg) {
     this.sendMsg({
-      type: "chat",
+      type: messageType.CHAT,
       data: msg,
     });
   }
@@ -209,20 +210,20 @@ export default class ChatJs {
   //发送心跳信息
   sendPingMsg() {
     this.sendMsg({
-      type: "ping",
+      type: messageType.PING,
       data: null,
     });
   }
 
   //发送Ack信息
   sendAckMsg(msg) {
-    this.sendMsg({ msg: msg, type: "ack" });
+    this.sendMsg({ msg: msg, type: messageType.ACK });
   }
 
   //发送other信息
   sendOtherMsg(msg) {
     this.sendMsg({
-      type: "other",
+      type: messageType.OTHER,
       data: msg,
     });
   }

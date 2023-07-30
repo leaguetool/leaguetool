@@ -62,6 +62,7 @@
 
 <script>
 //导入notification-outlined
+import Mock from "mockjs";
 import Notice from "./Notice.vue";
 import { NotificationFilled } from "@ant-design/icons-vue";
 import { Modal, message } from "ant-design-vue";
@@ -86,29 +87,18 @@ export default {
         content: createVNode(Notice, { notification: notification.value }),
       });
     };
-    // const adminUser = ref([
-    //   {
-    //     name: "理想三旬",
-    //     avatar:
-    //       "https://img2.baidu.com/it/u=1114729443,1120710416&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500",
-    //     online: true,
-    //   },
-    //   {
-    //     name: "风车车的猫尾饼",
-    //     avatar:
-    //       "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F75%2F84%2F5a34de267c8a6_610.jpg&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667622664&t=910490b881759efd58326d88c8c7444c",
-    //     online: false,
-    //   },
-    // ]);
-    //生成随机数据在chatUser里面 头像也随机生成
-    const chatUser = ref([]);
-    for (let i = 0; i < 8; i++) {
-      chatUser.value.push({
-        name: "用户名字" + i,
-        avatar: "https://joeschmoe.io/api/v1/random",
-        online: Math.random() > 0.5 ? true : false,
-      });
-    }
+
+    const data = Mock.mock({
+      // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+      "chatUser|20": [
+        {
+          name: "@ctitle(5,10)",
+          avatar: "@dataImage('200x100')",
+          "online|1-2": true,
+        },
+      ],
+    });
+    const chatUser = ref(data.chatUser);
 
     const chatUserModel = () => {
       message.info({
