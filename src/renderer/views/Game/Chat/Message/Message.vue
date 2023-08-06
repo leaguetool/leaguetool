@@ -11,7 +11,7 @@
       <div class="chat-message-body">
         <!-- 消息头 -->
         <div class="chat-message-header" v-show="!msg.isSelf">
-          ID:
+          <!-- ID: -->
           <div class="chat-message-header-name cursor-op" @click="copyName()">
             {{ msg.name }}
           </div>
