@@ -14,5 +14,7 @@ export default class TimerServer {
   /**
    * 插件出口
    */
-  stop(context) {}
+  stop(context) {
+    console.log("插件出口", context);
+  }
 }
